@@ -1,0 +1,282 @@
+const fighters = [
+    {
+        id: "jon_jones",
+        name: "Jon Jones",
+        nickname: "Bones",
+        division: "Heavyweight",
+        record: "27-1-0 (1 NC)",
+        nationality: "USA",
+        flag: "🇺🇸",
+        height: "6'4\" (193 cm)",
+        reach: "84.5\" (215 cm)",
+        stance: "Orthodox",
+        age: 38,
+        stats: {
+            striking: 88,
+            wrestling: 96,
+            grappling: 92,
+            cardio: 90,
+            power: 85,
+            defense: 95
+        },
+        bio: "Widely regarded as the greatest mixed martial artist of all time. Former long-time UFC Light Heavyweight Champion and current Heavyweight Champion. Known for his elite fight IQ, wrestling credentials, and creative striking.",
+        image: "assets/jon_jones.png"
+    },
+    {
+        id: "islam_makhachev",
+        name: "Islam Makhachev",
+        nickname: "—",
+        division: "Lightweight",
+        record: "26-1-0",
+        nationality: "Russia",
+        flag: "🇷🇺",
+        height: "5'10\" (178 cm)",
+        reach: "70.5\" (179 cm)",
+        stance: "Southpaw",
+        age: 34,
+        stats: {
+            striking: 84,
+            wrestling: 98,
+            grappling: 97,
+            cardio: 94,
+            power: 80,
+            defense: 93
+        },
+        bio: "The reigning UFC Lightweight Champion and pound-for-pound king. Under the tutelage of Khabib Nurmagomedov, Makhachev has dominated the lightweight division with elite Sambo wrestling and rapidly evolving striking.",
+        image: "assets/islam_makhachev.png"
+    },
+    {
+        id: "alex_pereira",
+        name: "Alex Pereira",
+        nickname: "Poatan",
+        division: "Light Heavyweight",
+        record: "11-2-0",
+        nationality: "Brazil",
+        flag: "🇧🇷",
+        height: "6'4\" (193 cm)",
+        reach: "79.0\" (200 cm)",
+        stance: "Orthodox",
+        age: 38,
+        stats: {
+            striking: 99,
+            wrestling: 65,
+            grappling: 68,
+            cardio: 88,
+            power: 100,
+            defense: 85
+        },
+        bio: "Former Middleweight and current Light Heavyweight Champion. 'Poatan' (Stone Hands) is a legendary kickboxer inducted into the Glory Hall of Fame, famous for his devastating left hook and rapid rise in the UFC.",
+        image: "assets/alex_pereira.png"
+    },
+    {
+        id: "ilia_topuria",
+        name: "Ilia Topuria",
+        nickname: "El Matador",
+        division: "Featherweight",
+        record: "16-0-0",
+        nationality: "Spain / Georgia",
+        flag: "🇪🇸",
+        height: "5'7\" (170 cm)",
+        reach: "69.0\" (175 cm)",
+        stance: "Orthodox",
+        age: 29,
+        stats: {
+            striking: 95,
+            wrestling: 88,
+            grappling: 90,
+            cardio: 91,
+            power: 92,
+            defense: 90
+        },
+        bio: "The undefeated UFC Featherweight Champion. Combining thunderous boxing power with high-level Greco-Roman wrestling and submission skills, he is one of the most complete and confident champions in the sport today.",
+        image: "assets/ilia_topuria.png"
+    },
+    {
+        id: "sean_omalley",
+        name: "Sean O'Malley",
+        nickname: "Suga",
+        division: "Bantamweight",
+        record: "18-2-0 (1 NC)",
+        nationality: "USA",
+        flag: "🇺🇸",
+        height: "5'11\" (180 cm)",
+        reach: "72.0\" (183 cm)",
+        stance: "Switch",
+        age: 31,
+        stats: {
+            striking: 97,
+            wrestling: 60,
+            grappling: 65,
+            cardio: 89,
+            power: 86,
+            defense: 88
+        },
+        bio: "Former UFC Bantamweight Champion and one of the sport's biggest superstars. Known for his flashy hair, exceptional movement, and world-class sniper-like precision striking.",
+        image: "assets/sean_omalley.png"
+    },
+    {
+        id: "conor_mcgregor",
+        name: "Conor McGregor",
+        nickname: "The Notorious",
+        division: "Lightweight",
+        record: "22-6-0",
+        nationality: "Ireland",
+        flag: "🇮🇪",
+        height: "5'9\" (175 cm)",
+        reach: "74.0\" (188 cm)",
+        stance: "Southpaw",
+        age: 37,
+        stats: {
+            striking: 94,
+            wrestling: 65,
+            grappling: 68,
+            cardio: 75,
+            power: 90,
+            defense: 80
+        },
+        bio: "The first simultaneous two-division champion in UFC history (Featherweight and Lightweight). He is the biggest pay-per-view draw in MMA history, known for his precision left hand and charismatic trash talk.",
+        image: "assets/conor_mcgregor.png"
+    },
+    {
+        id: "khabib_nurmagomedov",
+        name: "Khabib Nurmagomedov",
+        nickname: "The Eagle",
+        division: "Lightweight",
+        record: "29-0-0",
+        nationality: "Russia",
+        flag: "🇷🇺",
+        height: "5'10\" (178 cm)",
+        reach: "70.0\" (178 cm)",
+        stance: "Orthodox",
+        age: 37,
+        stats: {
+            striking: 78,
+            wrestling: 100,
+            grappling: 99,
+            cardio: 98,
+            power: 78,
+            defense: 94
+        },
+        bio: "UFC Hall of Famer and former undefeated Lightweight Champion. He holds the record for the longest lightweight championship reign, renowned for his unmatched wrestling dominance and ground-and-pound.",
+        image: "assets/khabib_nurmagomedov.png"
+    },
+    {
+        id: "max_holloway",
+        name: "Max Holloway",
+        nickname: "Blessed",
+        division: "Featherweight",
+        record: "26-8-0",
+        nationality: "USA",
+        flag: "🇺🇸",
+        height: "5'11\" (180 cm)",
+        reach: "69.0\" (175 cm)",
+        stance: "Orthodox",
+        age: 34,
+        stats: {
+            striking: 96,
+            wrestling: 70,
+            grappling: 72,
+            cardio: 99,
+            power: 80,
+            defense: 92
+        },
+        bio: "Former Featherweight Champion and current 'BMF' Champion. Known for his historic volume striking, legendary chin, and epic fights. One of the most beloved and entertaining fighters in the world.",
+        image: "assets/max_holloway.png"
+    },
+    {
+        id: "khamzat_chimaev",
+        name: "Khamzat Chimaev",
+        nickname: "Borz",
+        division: "Middleweight",
+        record: "14-0-0",
+        nationality: "UAE / Russia",
+        flag: "🇦🇪",
+        height: "6'2\" (188 cm)",
+        reach: "75.0\" (190 cm)",
+        stance: "Orthodox",
+        age: 32,
+        stats: {
+            striking: 80,
+            wrestling: 99,
+            grappling: 94,
+            cardio: 84,
+            power: 93,
+            defense: 88
+        },
+        bio: "Undefeated middleweight contender. Known for his extreme aggression, dominant wrestling, and ability to steamroll opponents within the first minute of a round.",
+        image: "assets/khamzat_chimaev.png"
+    },
+    {
+        id: "georges_st_pierre",
+        name: "Georges St-Pierre",
+        nickname: "Rush",
+        division: "Welterweight",
+        record: "26-2-0",
+        nationality: "Canada",
+        flag: "🇨🇦",
+        height: "5'11\" (180 cm)",
+        reach: "76.0\" (193 cm)",
+        stance: "Orthodox",
+        age: 45,
+        stats: {
+            striking: 88,
+            wrestling: 95,
+            grappling: 90,
+            cardio: 93,
+            power: 82,
+            defense: 96
+        },
+        bio: "Two-division champion (Welterweight and Middleweight) and UFC Hall of Famer. GSP is widely considered one of the most well-rounded and disciplined mixed martial artists in history.",
+        image: "assets/georges_st_pierre.png"
+    },
+    {
+        id: "leon_edwards",
+        name: "Leon Edwards",
+        nickname: "Rocky",
+        division: "Welterweight",
+        record: "22-4-0 (1 NC)",
+        nationality: "UK",
+        flag: "🇬🇧",
+        height: "6'2\" (188 cm)",
+        reach: "74.0\" (188 cm)",
+        stance: "Southpaw",
+        age: 34,
+        stats: {
+            striking: 92,
+            wrestling: 80,
+            grappling: 82,
+            cardio: 90,
+            power: 80,
+            defense: 91
+        },
+        bio: "Former UFC Welterweight Champion. Best known for his historic head-kick knockout of Kamaru Usman. A highly technical striker with strong defensive wrestling and clinch control.",
+        image: "assets/leon_edwards.png"
+    },
+    {
+        id: "alexandre_pantoja",
+        name: "Alexandre Pantoja",
+        nickname: "The Cannibal",
+        division: "Flyweight",
+        record: "28-5-0",
+        nationality: "Brazil",
+        flag: "🇧🇷",
+        height: "5'5\" (165 cm)",
+        reach: "68.0\" (173 cm)",
+        stance: "Orthodox",
+        age: 36,
+        stats: {
+            striking: 82,
+            wrestling: 85,
+            grappling: 95,
+            cardio: 94,
+            power: 78,
+            defense: 86
+        },
+        bio: "The reigning UFC Flyweight Champion. Known for his aggressive pacing, iron chin, and elite Brazilian Jiu-Jitsu skills that make him a submission threat from any position.",
+        image: "assets/alexandre_pantoja.png"
+    }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = fighters;
+}

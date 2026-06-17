@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Legends & Champions | Интерактивная база данных</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Интерактивный портал о бойцах UFC. База данных, статистика, радар-диаграммы навыков и симулятор боев в реальном времени.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Oxanium:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="bg-glow red-glow"></div>
+    <div class="bg-glow gold-glow"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-ufc">UFC</span><span class="logo-sub">PORTAL</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-btn active" id="btn-fighters" data-target="section-fighters">
+                    <i class="fa-solid fa-user-ninja"></i> Бойцы
+                </button>
+                <button class="nav-btn" id="btn-matchup" data-target="section-matchup">
+                    <i class="fa-solid fa-circle-nodes"></i> Симулятор Боя
+                </button>
+                <button class="nav-btn" id="btn-champions" data-target="section-champions">
+                    <i class="fa-solid fa-crown"></i> Чемпионы
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="hero-section">
+        <div class="hero-banner" style="background-image: linear-gradient(rgba(11, 11, 12, 0.4), rgba(11, 11, 12, 0.95)), url('assets/hero_banner.png');">
+            <div class="hero-content">
+                <h1 class="hero-title">ЭЛИТА СМЕШАННЫХ ЕДИНОБОРСТВ</h1>
+                <p class="hero-subtitle">Исследуйте подробную статистику, анализируйте навыки и симулируйте легендарные противостояния</p>
+                <div class="hero-actions">
+                    <a href="#section-fighters" class="btn btn-primary">Смотреть бойцов</a>
+                    <a href="#section-matchup" class="btn btn-secondary">Запустить симулятор</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-content">
+        
+        <!-- SECTION 1: FIGHTERS CATALOG -->
+        <section id="section-fighters" class="content-section active">
+            <div class="section-header">
+                <h2>База Данных Бойцов</h2>
+                <div class="search-filter-container">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="fighter-search" placeholder="Поиск бойца по имени, прозвищу...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="filters-container">
+                <div class="filter-label">Весовая категория:</div>
+                <div class="filter-chips" id="weight-filters">
+                    <button class="chip active" data-filter="all">Все веса</button>
+                    <button class="chip" data-filter="Heavyweight">Тяжелый</button>
+                    <button class="chip" data-filter="Light Heavyweight">Полутяжелый</button>
+                    <button class="chip" data-filter="Middleweight">Средний</button>
+                    <button class="chip" data-filter="Welterweight">Полусредний</button>
+                    <button class="chip" data-filter="Lightweight">Легкий</button>
+                    <button class="chip" data-filter="Featherweight">Полулегкий</button>
+                    <button class="chip" data-filter="Bantamweight">Легчайший</button>
+                    <button class="chip" data-filter="Flyweight">Наилегчайший</button>
+                </div>
+            </div>
+
+            <!-- Fighters Grid -->
+            <div class="fighters-grid" id="fighters-grid-container">
+                <!-- Cards injected dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: MATCHUP SIMULATOR -->
+        <section id="section-matchup" class="content-section">
+            <div class="section-header">
+                <h2>Симулятор Боев</h2>
+                <p>Выберите двух бойцов для детального сравнения их характеристик и автоматической симуляции поединка.</p>
+            </div>
+
+            <div class="matchup-arena">
+                <!-- Fighter 1 Select -->
+                <div class="arena-side left-side">
+                    <div class="fighter-select-box" id="select-fighter-1">
+                        <div class="select-placeholder">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Выбрать бойца №1</span>
+                        </div>
+                        <!-- Fighter Info Inject here -->
+                    </div>
+                </div>
+
+                <!-- VS Divider -->
+                <div class="arena-center">
+                    <div class="vs-glow-circle" id="start-simulation-btn">
+                        <span>VS</span>
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <div class="simulation-status-text" id="sim-tip">Нажмите на VS для симуляции</div>
+                </div>
+
+                <!-- Fighter 2 Select -->
+                <div class="arena-side right-side">
+                    <div class="fighter-select-box" id="select-fighter-2">
+                        <div class="select-placeholder">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Выбрать бойца №2</span>
+                        </div>
+                        <!-- Fighter Info Inject here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Compare Stats Panel -->
+            <div class="comparison-panel hidden" id="comparison-stats-panel">
+                <h3 class="panel-title">Сравнение Характеристик</h3>
+                <div class="comparison-bars" id="comparison-bars-container">
+                    <!-- Dynamic comparison bars -->
+                </div>
+            </div>
+
+            <!-- Simulation Terminal Output -->
+            <div class="simulation-console hidden" id="sim-console">
+                <div class="console-header">
+                    <div class="console-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="console-title">OCTAGON LOGS v1.0</div>
+                </div>
+                <div class="console-body" id="console-output">
+                    <!-- Round descriptions injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CHAMPIONS GALLERY -->
+        <section id="section-champions" class="content-section">
+            <div class="section-header">
+                <h2>Действующие Чемпионы и Легенды Зала Славы</h2>
+                <p>Обладатели чемпионских поясов и величайшие бойцы в истории смешанных единоборств.</p>
+            </div>
+            
+            <div class="champions-grid" id="champions-grid-container">
+                <!-- Champions cards injected dynamically via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FIGHTER DETAIL MODAL -->
+    <div class="modal-overlay" id="fighter-modal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-grid">
+                <!-- Left Column: Portrait & Attributes -->
+                <div class="modal-left">
+                    <div class="modal-fighter-img-wrapper">
+                        <img src="" id="modal-img" alt="Fighter Image">
+                    </div>
+                    <div class="modal-info-card">
+                        <h3 id="modal-name">Fighter Name</h3>
+                        <p id="modal-nickname" class="modal-nickname">"Nickname"</p>
+                        <div class="modal-meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">Страна</span>
+                                <span class="meta-value" id="modal-country">USA 🇺🇸</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Рекорд</span>
+                                <span class="meta-value highlight" id="modal-record">29-0-0</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Рост</span>
+                                <span class="meta-value" id="modal-height">178 cm</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Размах рук</span>
+                                <span class="meta-value" id="modal-reach">180 cm</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Стойка</span>
+                                <span class="meta-value" id="modal-stance">Southpaw</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Возраст</span>
+                                <span class="meta-value" id="modal-age">32 года</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Skills & Bio -->
+                <div class="modal-right">
+                    <div class="radar-chart-section">
+                        <h4>Анализ Навыков</h4>
+                        <div class="canvas-container">
+                            <canvas id="radar-chart" width="300" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="bio-section">
+                        <h4>Биография</h4>
+                        <p id="modal-bio">Detailed bio here...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIGHTER SELECTION MODAL (For Simulator) -->
+    <div class="modal-overlay" id="select-modal">
+        <div class="modal-card select-modal-card">
+            <div class="select-modal-header">
+                <h3>Выберите бойца</h3>
+                <button class="modal-close-btn" id="select-modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="select-grid" id="select-grid-container">
+                <!-- Small selection cards injected here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 UFC Portal. Создано с страстью к смешанным единоборствам.</p>
+        <p class="footer-note">Данный сайт разработан в демонстрационных целях.</p>
+    </footer>
+
+    <!-- JS Files -->
+    <script src="fighters.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
