@@ -1,4 +1,4 @@
-// --- UFC PORTAL APPLICATION LOGIC ---
+// --- UFC PORTAL APPLICATION LOGIC (V2.5 ENHANCED) ---
 
 document.addEventListener('DOMContentLoaded', () => {
     // Application State
@@ -6,15 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
         activeTab: 'section-fighters',
         searchQuery: '',
         weightFilter: 'all',
+        rankFilter: 'all', // 'all', 'C', 'top5', 'top15'
         selectedFighters: [null, null], // [Fighter 1, Fighter 2]
-        championsList: ['jon_jones', 'islam_makhachev', 'alex_pereira', 'ilia_topuria', 'alexandre_pantoja']
     };
 
     // DOM Elements
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('.content-section');
     const searchInput = document.getElementById('fighter-search');
-    const weightChips = document.querySelectorAll('.chip');
+    const weightChips = document.querySelectorAll('#weight-filters .chip');
+    const rankChips = document.querySelectorAll('#rank-filters .chip');
     const fightersGrid = document.getElementById('fighters-grid-container');
     const championsGrid = document.getElementById('champions-grid-container');
 
@@ -53,11 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => {
                 const targetSectionId = btn.getAttribute('data-target');
                 
-                // Update buttons
                 navButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                // Update sections
                 sections.forEach(sec => {
                     sec.classList.remove('active');
                     if (sec.id === targetSectionId) {
@@ -67,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 state.activeTab = targetSectionId;
 
-                // Scroll to top of section for better UX
                 if (targetSectionId !== 'section-fighters') {
                     window.scrollTo({ top: 400, behavior: 'smooth' });
                 }
@@ -75,14 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Hero actions linking
-        document.querySelector('.hero-actions .btn-primary').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('btn-fighters').click();
-        });
-        document.querySelector('.hero-actions .btn-secondary').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('btn-matchup').click();
-        });
+        const primaryHeroBtn = document.querySelector('.hero-actions .btn-primary');
+        if (primaryHeroBtn) {
+            primaryHeroBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('btn-fighters').click();
+            });
+        }
+        const secondaryHeroBtn = document.querySelector('.hero-actions .btn-secondary');
+        if (secondaryHeroBtn) {
+            secondaryHeroBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('btn-matchup').click();
+            });
+        }
     }
 
     // --- FILTERS & SEARCH ---
@@ -100,6 +104,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCatalog();
             });
         });
+
+        rankChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                rankChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                state.rankFilter = chip.getAttribute('data-rank');
+                renderCatalog();
+            });
+        });
     }
 
     // --- RENDER CATALOG ---
@@ -109,23 +122,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const filtered = fighters.filter(f => {
             const matchesSearch = f.name.toLowerCase().includes(state.searchQuery) || 
                                   f.nickname.toLowerCase().includes(state.searchQuery) ||
-                                  f.division.toLowerCase().includes(state.searchQuery);
+                                  f.division.toLowerCase().includes(state.searchQuery) ||
+                                  f.nationality.toLowerCase().includes(state.searchQuery);
+            
             const matchesWeight = state.weightFilter === 'all' || f.division === state.weightFilter;
-            return matchesSearch && matchesWeight;
+            
+            let matchesRank = true;
+            if (state.rankFilter === 'C') {
+                matchesRank = f.rank === 'C';
+            } else if (state.rankFilter === 'top5') {
+                matchesRank = f.rank === 'C' || (typeof f.rank === 'number' && f.rank <= 5);
+            } else if (state.rankFilter === 'top15') {
+                matchesRank = f.rank === 'C' || (typeof f.rank === 'number' && f.rank <= 15);
+            }
+
+            return matchesSearch && matchesWeight && matchesRank;
         });
 
         if (filtered.length === 0) {
             fightersGrid.innerHTML = `
                 <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-secondary);">
                     <i class="fa-solid fa-face-frown" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p>Бойцы не найдены. Попробуйте изменить параметры поиска.</p>
+                    <p>Бойцы не найдены. Попробуйте изменить параметры поиска или фильтров.</p>
                 </div>
             `;
             return;
         }
 
         filtered.forEach(fighter => {
-            const isChamp = state.championsList.includes(fighter.id);
+            const isChamp = fighter.rank === 'C';
             const card = createFighterCard(fighter, isChamp);
             fightersGrid.appendChild(card);
         });
@@ -135,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderChampions() {
         championsGrid.innerHTML = '';
         
-        const champs = fighters.filter(f => state.championsList.includes(f.id));
+        const champs = fighters.filter(f => f.rank === 'C');
         
         champs.forEach(fighter => {
             const card = createFighterCard(fighter, true);
@@ -150,8 +175,20 @@ document.addEventListener('DOMContentLoaded', () => {
         card.className = `fighter-card ${isChamp ? 'is-champion' : ''}`;
         card.setAttribute('data-id', fighter.id);
 
+        let rankBadgeHtml = '';
+        if (fighter.rank === 'C') {
+            rankBadgeHtml = `<div class="card-rank-badge rank-c"><i class="fa-solid fa-crown"></i> CHIP</div>`;
+        } else if (typeof fighter.rank === 'number' && fighter.rank <= 5) {
+            rankBadgeHtml = `<div class="card-rank-badge rank-top5">#${fighter.rank}</div>`;
+        } else if (typeof fighter.rank === 'number') {
+            rankBadgeHtml = `<div class="card-rank-badge">#${fighter.rank}</div>`;
+        }
+
+        const athleteImg = fighter.image || 'assets/fighter_card_bg.png';
+
         card.innerHTML = `
-            <div class="card-img-container" style="background-image: linear-gradient(rgba(20, 20, 25, 0.1), rgba(20, 20, 25, 0.9)), url('assets/fighter_card_bg.png');">
+            <div class="card-img-container" style="background-image: linear-gradient(rgba(20, 20, 25, 0.1), rgba(20, 20, 25, 0.9)), url('${athleteImg}');">
+                ${rankBadgeHtml}
                 ${isChamp ? '<div class="champion-badge"><i class="fa-solid fa-crown"></i> Чемпион</div>' : ''}
                 <div class="card-gradient"></div>
                 <div class="card-flag">${fighter.flag}</div>
@@ -186,7 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
             'Lightweight': 'Легкий вес',
             'Featherweight': 'Полулегкий вес',
             'Bantamweight': 'Легчайший вес',
-            'Flyweight': 'Наилегчайший вес'
+            'Flyweight': 'Наилегчайший вес',
+            'Strawweight': 'Женский минимальный вес',
+            'Women\'s Flyweight': 'Женский наилегчайший вес',
+            'Women\'s Bantamweight': 'Женский легчайший вес'
         };
         return divisions[div] || div;
     }
@@ -218,10 +258,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const fighter = fighters.find(f => f.id === fighterId);
         if (!fighter) return;
 
-        // Fill data
-        document.getElementById('modal-img').src = 'assets/fighter_card_bg.png'; // consistent themed placeholder style
+        // Image with fallback
+        const modalImg = document.getElementById('modal-img');
+        modalImg.src = fighter.image || 'assets/fighter_card_bg.png';
+        modalImg.onerror = function() {
+            this.onerror = null;
+            this.src = 'assets/fighter_card_bg.png';
+        };
+
+        // Rank tag
+        const rankTag = document.getElementById('modal-rank-tag');
+        if (fighter.rank === 'C') {
+            rankTag.innerText = '🏆 ЧЕМПИОН';
+            rankTag.style.background = 'linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%)';
+            rankTag.style.color = '#000';
+        } else {
+            rankTag.innerText = `#${fighter.rank} В РЕЙТИНГЕ`;
+            rankTag.style.background = 'var(--accent-red)';
+            rankTag.style.color = '#FFF';
+        }
+
         document.getElementById('modal-name').innerText = fighter.name;
         document.getElementById('modal-nickname').innerText = fighter.nickname !== '—' ? `"${fighter.nickname}"` : '';
+        document.getElementById('modal-verdict-elo').innerText = `${fighter.verdictRating || 900} Elo`;
         document.getElementById('modal-country').innerText = `${fighter.nationality} ${fighter.flag}`;
         document.getElementById('modal-record').innerText = fighter.record;
         document.getElementById('modal-height').innerText = fighter.height;
@@ -230,10 +289,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modal-age').innerText = `${fighter.age} лет`;
         document.getElementById('modal-bio').innerText = fighter.bio;
 
-        // Open modal window
+        // Sherdog Breakdown
+        if (fighter.sherdog) {
+            const totalWins = fighter.sherdog.ko + fighter.sherdog.sub + fighter.sherdog.dec || 1;
+            const koPct = Math.round((fighter.sherdog.ko / totalWins) * 100);
+            const subPct = Math.round((fighter.sherdog.sub / totalWins) * 100);
+            const decPct = 100 - koPct - subPct;
+
+            document.getElementById('sherdog-ko-bar').style.width = `${koPct}%`;
+            document.getElementById('sherdog-sub-bar').style.width = `${subPct}%`;
+            document.getElementById('sherdog-dec-bar').style.width = `${decPct}%`;
+
+            document.getElementById('sherdog-ko-val').innerText = `${fighter.sherdog.ko} (${koPct}%)`;
+            document.getElementById('sherdog-sub-val').innerText = `${fighter.sherdog.sub} (${subPct}%)`;
+            document.getElementById('sherdog-dec-val').innerText = `${fighter.sherdog.dec} (${decPct}%)`;
+        }
+
+        // UFC Advanced Stats
+        if (fighter.ufcStats) {
+            document.getElementById('ufc-slpm').innerText = fighter.ufcStats.slpm.toFixed(2);
+            document.getElementById('ufc-str-acc').innerText = `${fighter.ufcStats.strAcc}%`;
+            document.getElementById('ufc-sapm').innerText = fighter.ufcStats.sapm.toFixed(2);
+            document.getElementById('ufc-td-def').innerText = `${fighter.ufcStats.tdDef}%`;
+        }
+
         detailModal.classList.add('open');
 
-        // Draw Canvas Radar Chart
         setTimeout(() => {
             drawRadarChart(fighter.stats);
         }, 100);
@@ -253,11 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         const width = canvas.width;
-        const height = canvas.height;
         const center = width / 2;
         const radius = width * 0.35;
         
@@ -265,29 +344,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const keys = ['striking', 'wrestling', 'grappling', 'cardio', 'power', 'defense'];
         const numAxes = labels.length;
         
-        // 1. Draw web grids (concentric hexagons)
+        // Grid
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
         ctx.lineWidth = 1;
-        const gridLevels = 5;
-        
-        for (let level = 1; level <= gridLevels; level++) {
-            const levelRadius = radius * (level / gridLevels);
+        for (let level = 1; level <= 5; level++) {
+            const levelRadius = radius * (level / 5);
             ctx.beginPath();
             for (let i = 0; i < numAxes; i++) {
                 const angle = (i * 2 * Math.PI / numAxes) - Math.PI / 2;
                 const x = center + levelRadius * Math.cos(angle);
                 const y = center + levelRadius * Math.sin(angle);
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
             }
             ctx.closePath();
             ctx.stroke();
         }
 
-        // 2. Draw axes lines
+        // Axes
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
         for (let i = 0; i < numAxes; i++) {
             const angle = (i * 2 * Math.PI / numAxes) - Math.PI / 2;
@@ -299,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.stroke();
         }
 
-        // 3. Draw Labels
+        // Labels
         ctx.fillStyle = '#9FA2B2';
         ctx.font = '700 11px "Oxanium", sans-serif';
         ctx.textAlign = 'center';
@@ -307,55 +381,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         for (let i = 0; i < numAxes; i++) {
             const angle = (i * 2 * Math.PI / numAxes) - Math.PI / 2;
-            // Push labels slightly outwards from the hexagon vertices
             const labelX = center + (radius + 20) * Math.cos(angle);
             const labelY = center + (radius + 12) * Math.sin(angle);
             ctx.fillText(labels[i], labelX, labelY);
         }
 
-        // 4. Draw Data Polygon
+        // Polygon
         const points = [];
         ctx.beginPath();
         for (let i = 0; i < numAxes; i++) {
-            const statValue = stats[keys[i]]; // value 0 to 100
+            const statValue = stats[keys[i]];
             const valueRadius = radius * (statValue / 100);
             const angle = (i * 2 * Math.PI / numAxes) - Math.PI / 2;
             const x = center + valueRadius * Math.cos(angle);
             const y = center + valueRadius * Math.sin(angle);
             points.push({x, y, val: statValue});
-            
-            if (i === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
         }
         ctx.closePath();
         
-        // Fill area
-        ctx.fillStyle = 'rgba(226, 27, 44, 0.35)'; // crimson red semi-transparent
+        ctx.fillStyle = 'rgba(226, 27, 44, 0.35)';
         ctx.fill();
-        
-        // Draw border line
         ctx.strokeStyle = '#E21B2C';
         ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // 5. Draw data points handles and labels values
+        // Handles
         points.forEach(pt => {
-            // Circle handles
             ctx.beginPath();
             ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
-            ctx.fillStyle = '#D4AF37'; // gold dots
+            ctx.fillStyle = '#D4AF37';
             ctx.fill();
             ctx.strokeStyle = '#FFFFFF';
             ctx.lineWidth = 1;
             ctx.stroke();
 
-            // Value text tags
             ctx.fillStyle = '#FFFFFF';
             ctx.font = 'bold 9px "Outfit", sans-serif';
-            // Offset text slightly from point
             const textOffset = 10;
             const angleFromCenter = Math.atan2(pt.y - center, pt.x - center);
             const textX = pt.x + textOffset * Math.cos(angleFromCenter);
@@ -364,15 +427,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- MATCHUP SIMULATOR LOGIC ---
+    // --- MATCHUP SIMULATOR ---
     function setupSimulatorEvents() {
-        selectBox1.addEventListener('click', () => {
-            openSelectModal(1);
-        });
-
-        selectBox2.addEventListener('click', () => {
-            openSelectModal(2);
-        });
+        selectBox1.addEventListener('click', () => openSelectModal(1));
+        selectBox2.addEventListener('click', () => openSelectModal(2));
 
         startSimBtn.addEventListener('click', () => {
             if (!state.selectedFighters[0] || !state.selectedFighters[1]) {
@@ -392,15 +450,16 @@ document.addEventListener('DOMContentLoaded', () => {
         selectGrid.innerHTML = '';
         
         fighters.forEach(fighter => {
-            // Disable selecting the already chosen fighter in the other slot
             const otherSlot = slot === 1 ? 1 : 0;
             const otherSelected = state.selectedFighters[otherSlot];
             if (otherSelected && otherSelected.id === fighter.id) return;
 
             const item = document.createElement('div');
             item.className = 'select-item';
+            const itemImg = fighter.image || 'assets/fighter_card_bg.png';
+
             item.innerHTML = `
-                <div class="select-item-img" style="background-image: url('assets/fighter_card_bg.png');"></div>
+                <div class="select-item-img" style="background-image: url('${itemImg}');"></div>
                 <div class="select-item-name">${fighter.name}</div>
             `;
             item.addEventListener('click', () => {
@@ -419,14 +478,15 @@ document.addEventListener('DOMContentLoaded', () => {
         state.selectedFighters[slot - 1] = fighter;
         selectModal.classList.remove('open');
 
-        // Render selected fighter block
         const container = slot === 1 ? selectBox1 : selectBox2;
+        const athleteImg = fighter.image || 'assets/fighter_card_bg.png';
+
         container.innerHTML = `
             <div class="selected-fighter-profile">
                 <button class="arena-remove-btn" data-slot="${slot}"><i class="fa-solid fa-xmark"></i></button>
-                <div class="selected-fighter-img" style="background-image: linear-gradient(rgba(20, 20, 25, 0.1), rgba(20, 20, 25, 0.9)), url('assets/fighter_card_bg.png');"></div>
+                <div class="selected-fighter-img" style="background-image: linear-gradient(rgba(20, 20, 25, 0.1), rgba(20, 20, 25, 0.9)), url('${athleteImg}');"></div>
                 <div class="selected-fighter-info">
-                    <div class="card-nickname" style="color: ${state.championsList.includes(fighter.id) ? 'var(--accent-gold)' : 'var(--accent-red)'}">
+                    <div class="card-nickname" style="color: ${fighter.rank === 'C' ? 'var(--accent-gold)' : 'var(--accent-red)'}">
                         ${fighter.nickname !== '—' ? `"${fighter.nickname}"` : '&nbsp;'}
                     </div>
                     <h3>${fighter.name}</h3>
@@ -435,9 +495,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Add event listener to remove button
         container.querySelector('.arena-remove-btn').addEventListener('click', (e) => {
-            e.stopPropagation(); // prevent opening select modal again
+            e.stopPropagation();
             removeFighter(slot);
         });
 
@@ -462,12 +521,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const [f1, f2] = state.selectedFighters;
         
         if (f1 && f2) {
-            // Both selected
             startSimBtn.classList.add('active');
             simTip.innerText = 'ГОТОВЫ К БОЮ! НАЖМИТЕ VS ДЛЯ СИМУЛЯЦИИ';
             renderComparisonStats();
         } else {
-            // One or both missing
             startSimBtn.classList.remove('active');
             simTip.innerText = 'Выберите обоих бойцов для сравнения';
             comparisonPanel.classList.add('hidden');
@@ -481,30 +538,26 @@ document.addEventListener('DOMContentLoaded', () => {
         comparisonPanel.classList.remove('hidden');
 
         const metrics = [
-            { label: 'Ударная техника', key: 'striking' },
-            { label: 'Борьба (Вольная/Греко)', key: 'wrestling' },
-            { label: 'Грэпплинг (БЖЖ/Самбо)', key: 'grappling' },
-            { label: 'Выносливость (Кардио)', key: 'cardio' },
-            { label: 'Сила удара / Мощь', key: 'power' },
-            { label: 'Защитные навыки', key: 'defense' }
+            { label: 'Verdict Elo Rating', val1: f1.verdictRating || 900, val2: f2.verdictRating || 900 },
+            { label: 'Ударов в мин (SLpM)', val1: f1.ufcStats?.slpm || 4.0, val2: f2.ufcStats?.slpm || 4.0 },
+            { label: 'Точность ударов %', val1: f1.ufcStats?.strAcc || 50, val2: f2.ufcStats?.strAcc || 50 },
+            { label: 'Защита от тейкдаунов %', val1: f1.ufcStats?.tdDef || 70, val2: f2.ufcStats?.tdDef || 70 },
+            { label: 'Ударка (Skill)', val1: f1.stats.striking, val2: f2.stats.striking },
+            { label: 'Борьба / Грэпплинг', val1: f1.stats.wrestling, val2: f2.stats.wrestling }
         ];
 
         metrics.forEach(m => {
-            const val1 = f1.stats[m.key];
-            const val2 = f2.stats[m.key];
-            
-            // Calculate proportional widths (normalized to 100% total)
-            const sum = val1 + val2;
-            const pct1 = Math.round((val1 / sum) * 100);
+            const sum = m.val1 + m.val2 || 1;
+            const pct1 = Math.round((m.val1 / sum) * 100);
             const pct2 = 100 - pct1;
 
             const row = document.createElement('div');
             row.className = 'comparison-row';
             row.innerHTML = `
                 <div class="comparison-label-row">
-                    <span class="value-left">${val1}</span>
+                    <span class="value-left">${m.val1}</span>
                     <span>${m.label}</span>
-                    <span class="value-right">${val2}</span>
+                    <span class="value-right">${m.val2}</span>
                 </div>
                 <div class="comparison-bar-bg">
                     <div class="bar-left" style="width: 0%"></div>
@@ -514,7 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             comparisonBars.appendChild(row);
 
-            // Animate bar expansion after rendering
             setTimeout(() => {
                 row.querySelector('.bar-left').style.width = `${pct1}%`;
                 row.querySelector('.bar-right').style.width = `${pct2}%`;
@@ -522,32 +574,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FIGHT MATCHUP GENERATOR SIMULATION ---
+    // --- SIMULATION ENGINE ---
     function runMatchupSimulation() {
         const [f1, f2] = state.selectedFighters;
         simConsole.classList.remove('hidden');
         consoleOutput.innerHTML = '';
         
-        // Scroll console into view
         simConsole.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-        // Calculate scores
         const score1 = calculateCombatScore(f1, f2);
         const score2 = calculateCombatScore(f2, f1);
         
         const logs = [];
-        logs.push({ text: `[SYSTEM] Инициализация симуляции поединка: ${f1.name.toUpperCase()} против ${f2.name.toUpperCase()}`, type: 'info' });
-        logs.push({ text: `[SYSTEM] Класс: ${translateDivision(f1.division)}. Формат поединка: 3 раунда по 5 минут.`, type: 'info' });
-        logs.push({ text: `[OCTAGON] Звучит гонг! Бойцы сходятся в центре клетки!`, type: 'warning' });
+        logs.push({ text: `[SYSTEM] Инициализация боя: ${f1.name.toUpperCase()} (Verdict ${f1.verdictRating || 900} Elo) vs ${f2.name.toUpperCase()} (Verdict ${f2.verdictRating || 900} Elo)`, type: 'info' });
+        logs.push({ text: `[UFC STATS] Активность: ${f1.name} (${f1.ufcStats?.slpm || 4.0} SLpM) | ${f2.name} (${f2.ufcStats?.slpm || 4.0} SLpM)`, type: 'info' });
+        logs.push({ text: `[OCTAGON] Звучит гонг! Поединок начался!`, type: 'warning' });
 
-        // Simulate 3 Rounds
         let f1Damage = 0;
         let f2Damage = 0;
         
         for (let round = 1; round <= 3; round++) {
             logs.push({ text: `=== РАУНД ${round} ===`, type: 'round' });
             
-            // Generate random scenarios based on stats
             const actions = generateRoundActions(f1, f2, round);
             actions.forEach(act => {
                 logs.push({ text: act.text, type: 'action' });
@@ -555,12 +603,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 f2Damage += act.f2dmg;
             });
             
-            logs.push({ text: `[OCTAGON] Конец раунда ${round}. Угловые выходят в октагон.`, type: 'warning' });
+            logs.push({ text: `[OCTAGON] Конец раунда ${round}.`, type: 'warning' });
         }
 
-        // Calculate Final Verdict
         logs.push({ text: `=== РЕШЕНИЕ СУДЕЙ ===`, type: 'round' });
-        logs.push({ text: `[SYSTEM] Идет подсчет очков судейских записок...`, type: 'info' });
+        logs.push({ text: `[SYSTEM] Подсчет карточек...`, type: 'info' });
 
         const finalScore1 = score1 - f1Damage + f2Damage;
         const finalScore2 = score2 - f2Damage + f1Damage;
@@ -568,44 +615,28 @@ document.addEventListener('DOMContentLoaded', () => {
         let winner, loser, method;
         const roll = Math.random();
 
-        // 10% chance of sudden finish (KO/SUB) if stats gap is significant
-        if (Math.abs(score1 - score2) > 12 && roll > 0.6) {
+        if (Math.abs(score1 - score2) > 10 && roll > 0.5) {
             winner = score1 > score2 ? f1 : f2;
             loser = score1 > score2 ? f2 : f1;
-            method = Math.random() > 0.5 ? 'нокаутом (KO)' : 'болевым приемом (Submission)';
             
-            // Insert sudden finish log before decision
-            const finishRound = Math.floor(Math.random() * 3) + 1;
-            const finishTime = `${Math.floor(Math.random() * 4) + 1}:${Math.floor(Math.random() * 50) + 10}`;
+            const useKo = winner.sherdog && (winner.sherdog.ko > winner.sherdog.sub);
+            method = useKo ? 'нокаутом (KO/TKO)' : 'удушающим/болевым приемом (Submission)';
             
-            // Remove the final rounds and sub decision logs to replace with KO
-            const truncateIndex = logs.findIndex(l => l.text.includes(`=== РАУНД ${finishRound}`));
-            logs.splice(truncateIndex + 1); // delete subsequent actions
-            
-            logs.push({ text: `[OCTAGON] [${finishTime}] БОЙ ОСТАНОВЛЕН!`, type: 'warning' });
-            if (method.includes('нокаутом')) {
-                logs.push({ text: `[COMBAT] ${winner.name} ловит соперника встречным ударом! ${loser.name} падает на настил! Тяжелейший нокаут!`, type: 'action' });
+            logs.push({ text: `[OCTAGON] БОЙ ОСТАНОВЛЕН!`, type: 'warning' });
+            if (useKo) {
+                logs.push({ text: `[COMBAT] ${winner.name} пробивает серии точных ударов (SLpM ${winner.ufcStats?.slpm || 4.5})! ${loser.name} падает на настил! Рефери останавливает бой!`, type: 'action' });
             } else {
-                logs.push({ text: `[COMBAT] ${winner.name} переводит бой на канвас, мгновенно забирает спину и проводит удушающий прием сзади! ${loser.name} вынужден постучать в знак сдачи!`, type: 'action' });
+                logs.push({ text: `[COMBAT] ${winner.name} забирает спину в партере и проводит плотный захват! ${loser.name} сдается!`, type: 'action' });
             }
-            logs.push({ text: `Победитель боя: ${winner.name} ${method} в раунде ${finishRound}!`, type: 'outcome' });
+            logs.push({ text: `Победитель боя: ${winner.name} ${method}!`, type: 'outcome' });
         } else {
-            // Decision verdict
-            if (Math.abs(finalScore1 - finalScore2) < 2) {
-                // Split decision
-                winner = finalScore1 > finalScore2 ? f1 : f2;
-                loser = finalScore1 > finalScore2 ? f2 : f1;
-                method = 'разделенным решением судей (Split Decision)';
-            } else {
-                // Unanimous decision
-                winner = finalScore1 > finalScore2 ? f1 : f2;
-                loser = finalScore1 > finalScore2 ? f2 : f1;
-                method = 'единогласным решением судей (Unanimous Decision)';
-            }
+            winner = finalScore1 > finalScore2 ? f1 : f2;
+            loser = finalScore1 > finalScore2 ? f2 : f1;
+            method = Math.abs(finalScore1 - finalScore2) < 3 ? 'разделенным решением судей (Split Decision)' : 'единогласным решением судей (Unanimous Decision)';
+            
             logs.push({ text: `Победитель боя: ${winner.name} побеждает ${method}!`, type: 'outcome' });
         }
 
-        // Typewrite simulation outputs in terminal console
         let logIndex = 0;
         function printNextLog() {
             if (logIndex < logs.length) {
@@ -614,12 +645,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 line.className = `console-line ${getLineClass(log.type)}`;
                 line.innerText = log.text;
                 consoleOutput.appendChild(line);
-                
-                // Auto scroll console
                 consoleOutput.scrollTop = consoleOutput.scrollHeight;
-                
                 logIndex++;
-                setTimeout(printNextLog, 650); // delay between entries for dramatic effect
+                setTimeout(printNextLog, 600);
             }
         }
         printNextLog();
@@ -637,19 +665,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateCombatScore(fighter, opponent) {
-        // Base combat rating score derived from their stats
-        let score = (fighter.stats.striking * 0.25) + 
+        let score = (fighter.stats.striking * 0.20) + 
                     (fighter.stats.wrestling * 0.20) + 
                     (fighter.stats.grappling * 0.20) + 
                     (fighter.stats.cardio * 0.15) + 
                     (fighter.stats.power * 0.10) + 
-                    (fighter.stats.defense * 0.10);
+                    (fighter.stats.defense * 0.15);
 
-        // Stance adaptation advantage
-        if (fighter.stance === 'Southpaw' && opponent.stance === 'Orthodox') {
-            score += 1.5; // southpaw advantage against orthodox
-        } else if (fighter.stance === 'Switch') {
-            score += 1.0; // unpredictable switch stance
+        // Add UFC Advanced stats factor
+        if (fighter.ufcStats) {
+            score += (fighter.ufcStats.slpm * 0.5);
+            score += (fighter.ufcStats.tdDef * 0.05);
+        }
+
+        if (fighter.verdictRating) {
+            score += (fighter.verdictRating / 100);
         }
 
         return score;
@@ -657,94 +687,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateRoundActions(f1, f2, round) {
         const actions = [];
-        
-        // Determine primary style of fighters
         const f1Striker = f1.stats.striking > f1.stats.wrestling;
-        const f2Striker = f2.stats.striking > f2.stats.wrestling;
 
-        // Choose random scenarios
-        const rolls = [Math.random(), Math.random()];
-        
-        // Scenario 1: Striking exchanges
-        if (rolls[0] > 0.4) {
-            if (f1.stats.striking > f2.stats.striking) {
-                actions.push({
-                    text: `[COMBAT] ${f1.name} доминирует в стойке, пробивая двойку джебов. ${f2.name} защищается, но пропускает жесткий лоу-кик.`,
-                    f1dmg: 2,
-                    f2dmg: 6
-                });
-            } else {
-                actions.push({
-                    text: `[COMBAT] ${f2.name} демонстрирует превосходную скорость, отвечая точными апперкотами на выпады ${f1.name}.`,
-                    f1dmg: 5,
-                    f2dmg: 1
-                });
-            }
-        } else {
-            actions.push({
-                text: `[COMBAT] Обоюдный размен ударами в центре октагона. Оба бойца обмениваются плотными боковыми.`,
-                f1dmg: 4,
-                f2dmg: 4
-            });
-        }
+        actions.push({
+            text: `[COMBAT] ${f1.name} выбрасывает комбинации (активность ${f1.ufcStats?.slpm || 4.0} SLpM), а ${f2.name} отвечает контратаками.`,
+            f1dmg: Math.floor(Math.random() * 4) + 1,
+            f2dmg: Math.floor(Math.random() * 4) + 1
+        });
 
-        // Scenario 2: Wrestling/Grappling attempt
-        if (rolls[1] > 0.5) {
-            // Wrestler vs Striker matchup check
-            if (!f1Striker && f2Striker) {
-                // Wrestler f1 attempts takedown on striker f2
-                if (f1.stats.wrestling > f2.stats.defense) {
-                    actions.push({
-                        text: `[COMBAT] ${f1.name} совершает проход в две ноги и переводит ${f2.name} на канвас. Контроль у сетки и жесткий ground-and-pound.`,
-                        f1dmg: 1,
-                        f2dmg: 7
-                    });
-                } else {
-                    actions.push({
-                        text: `[COMBAT] ${f1.name} пытается пройти в клинч, но ${f2.name} успешно защищается (Sprawl) и разрывает дистанцию коленом.`,
-                        f1dmg: 4,
-                        f2dmg: 1
-                    });
-                }
-            } else if (!f2Striker && f1Striker) {
-                // Wrestler f2 attempts takedown on striker f1
-                if (f2.stats.wrestling > f1.stats.defense) {
-                    actions.push({
-                        text: `[COMBAT] ${f2.name} захватывает корпус ${f1.name} и проводит зрелищный бросок прогибом. Бой переходит на землю.`,
-                        f1dmg: 6,
-                        f2dmg: 1
-                    });
-                } else {
-                    actions.push({
-                        text: `[COMBAT] ${f2.name} бросается в ноги сопернику, но ${f1.name} отбрасывает ноги назад и наносит несколько ударов по корпусу.`,
-                        f1dmg: 1,
-                        f2dmg: 3
-                    });
-                }
-            } else {
-                // Similar styles: clinch battle
+        if (!f1Striker && f2.ufcStats) {
+            if (f1.stats.wrestling > f2.ufcStats.tdDef) {
                 actions.push({
-                    text: `[COMBAT] Вязкая борьба в клинче у сетки октагона. Судья просит бойцов быть активнее.`,
-                    f1dmg: 2,
-                    f2dmg: 2
-                });
-            }
-        }
-
-        // Scenario 3: Cardio impact in later rounds
-        if (round >= 3) {
-            const cardioDiff = f1.stats.cardio - f2.stats.cardio;
-            if (cardioDiff > 5) {
-                actions.push({
-                    text: `[CARDIO] ${f2.name} заметно выдохся и опустил руки. ${f1.name} сохраняет высокий темп и легко расстреливает соперника джебами с дистанции.`,
-                    f1dmg: 0,
+                    text: `[COMBAT] ${f1.name} преодолевает защиту от тейкдаунов (${f2.ufcStats.tdDef}%) и переводит ${f2.name} на канвас!`,
+                    f1dmg: 1,
                     f2dmg: 5
                 });
-            } else if (cardioDiff < -5) {
+            } else {
                 actions.push({
-                    text: `[CARDIO] ${f1.name} дышит тяжело и с трудом передвигается. ${f2.name} кружит вокруг него, выбрасывая быстрые хай-кики.`,
-                    f1dmg: 5,
-                    f2dmg: 0
+                    text: `[COMBAT] ${f2.name} демонстрирует отличную защиту от тейкдаунов (${f2.ufcStats.tdDef}%) и сбрасывает захват.`,
+                    f1dmg: 3,
+                    f2dmg: 1
                 });
             }
         }
@@ -752,6 +714,5 @@ document.addEventListener('DOMContentLoaded', () => {
         return actions;
     }
 
-    // Run app initialization
     init();
 });

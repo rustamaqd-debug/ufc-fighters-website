@@ -1,4 +1,4 @@
-/* --- UFC PORTAL STYLESHEET --- */
+/* --- UFC PORTAL STYLESHEET (ENHANCED V2.5) --- */
 
 :root {
     --bg-dark: #070708;
@@ -8,6 +8,7 @@
     --accent-red-glow: rgba(226, 27, 44, 0.4);
     --accent-gold: #D4AF37;
     --accent-gold-glow: rgba(212, 175, 55, 0.4);
+    --accent-blue: #3182ce;
     --text-primary: #FFFFFF;
     --text-secondary: #9FA2B2;
     --font-heading: 'Oxanium', sans-serif;
@@ -156,7 +157,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    padding-top: 75px; /* Offset for header */
+    padding-top: 75px;
 }
 
 .hero-banner {
@@ -171,16 +172,16 @@ body {
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 850px;
     padding: 2rem;
     z-index: 10;
 }
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 800;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     margin-bottom: 1rem;
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
     background: linear-gradient(135deg, #FFF 50%, #B0B0B0 100%);
@@ -189,7 +190,7 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--text-secondary);
     margin-bottom: 2rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
@@ -264,7 +265,7 @@ body {
 }
 
 .section-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     border-left: 4px solid var(--accent-red);
     padding-left: 1.5rem;
 }
@@ -329,7 +330,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
 
@@ -337,6 +338,7 @@ body {
     font-weight: 600;
     color: var(--text-secondary);
     font-family: var(--font-heading);
+    min-width: 100px;
 }
 
 .filter-chips {
@@ -371,11 +373,17 @@ body {
     box-shadow: 0 2px 10px rgba(226, 27, 44, 0.3);
 }
 
+.chip.rank-chip.active {
+    background: linear-gradient(135deg, #E21B2C 0%, #B0101E 100%);
+    border-color: var(--accent-red);
+}
+
 /* Fighters Grid */
 .fighters-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
+    margin-top: 2rem;
 }
 
 /* Fighter Card */
@@ -389,24 +397,8 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 400px;
+    min-height: 420px;
     backdrop-filter: blur(12px);
-}
-
-.fighter-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    padding: 1.5px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
 }
 
 .fighter-card:hover {
@@ -421,13 +413,43 @@ body {
 }
 
 .card-img-container {
-    height: 240px;
-    background-size: cover;
-    background-position: center;
+    height: 250px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
     position: relative;
     display: flex;
     align-items: flex-end;
     background-color: #121217;
+}
+
+/* Rank Badges */
+.card-rank-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid var(--border-color);
+    color: #FFF;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    backdrop-filter: blur(5px);
+    z-index: 3;
+}
+
+.card-rank-badge.rank-c {
+    background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+    color: #000;
+    border: none;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.card-rank-badge.rank-top5 {
+    background: rgba(226, 27, 44, 0.85);
+    border-color: var(--accent-red);
 }
 
 .champion-badge {
@@ -444,6 +466,7 @@ body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
     text-transform: uppercase;
     letter-spacing: 1px;
+    z-index: 3;
 }
 
 .card-gradient {
@@ -538,14 +561,6 @@ body {
     color: var(--accent-gold);
 }
 
-.card-action-text i {
-    transition: transform 0.2s ease;
-}
-
-.fighter-card:hover .card-action-text i {
-    transform: translateX(3px);
-}
-
 /* Modals General Overlay */
 .modal-overlay {
     position: fixed;
@@ -553,7 +568,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     z-index: 1000;
     display: flex;
@@ -575,12 +590,12 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 16px;
     width: 100%;
-    max-width: 900px;
+    max-width: 950px;
     position: relative;
     transform: scale(0.9);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
-    max-height: 90vh;
+    max-height: 92vh;
 }
 
 .modal-overlay.open .modal-card {
@@ -613,18 +628,15 @@ body {
 
 .modal-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.25fr;
     height: 100%;
     overflow-y: auto;
-    max-height: 90vh;
+    max-height: 92vh;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .modal-grid {
         grid-template-columns: 1fr;
-    }
-    .modal-overlay {
-        padding: 0.5rem;
     }
 }
 
@@ -636,25 +648,36 @@ body {
     flex-direction: column;
     gap: 1.5rem;
     background: #0d0d10;
+    position: relative;
 }
 
 .modal-fighter-img-wrapper {
     height: 280px;
-    background: #15151a;
+    background: radial-gradient(circle at center, #1f1f28 0%, #101015 100%);
     border-radius: 8px;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     border: 1px solid var(--border-color);
-    background-size: cover;
-    background-position: center;
 }
 
 .modal-fighter-img-wrapper img {
     max-height: 100%;
     max-width: 100%;
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.modal-rank-badge {
+    display: inline-block;
+    background: var(--accent-red);
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
 }
 
 .modal-info-card h3 {
@@ -670,8 +693,23 @@ body {
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: 1px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-transform: uppercase;
+}
+
+.verdict-badge-container {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(226, 27, 44, 0.15) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .modal-meta-grid {
@@ -715,13 +753,16 @@ body {
 
 .modal-right h4 {
     font-family: var(--font-heading);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .radar-chart-section {
@@ -739,6 +780,70 @@ body {
     width: 280px;
     height: 280px;
     position: relative;
+}
+
+/* Sherdog Section Styles */
+.sherdog-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.sherdog-bar {
+    height: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+}
+
+.sherdog-segment {
+    height: 100%;
+    transition: width 0.8s ease-out;
+}
+
+.sherdog-segment.ko-seg { background: var(--accent-red); }
+.sherdog-segment.sub-seg { background: var(--accent-gold); }
+.sherdog-segment.dec-seg { background: var(--accent-blue); }
+
+.sherdog-legend {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.legend-item.ko { color: #ff5f56; }
+.legend-item.sub { color: var(--accent-gold); }
+.legend-item.dec { color: #5ea2e6; }
+
+/* UFC Stats Grid */
+.ufc-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.ufc-stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    text-align: center;
+}
+
+.stat-box-val {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+}
+
+.stat-box-lbl {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
 }
 
 .bio-section p {
@@ -854,9 +959,11 @@ body {
 
 .selected-fighter-img {
     height: 70%;
-    background-size: cover;
-    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
     position: relative;
+    background-color: #121217;
 }
 
 .selected-fighter-info {
@@ -1083,7 +1190,7 @@ body {
     padding: 1.5rem;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.95rem;
-    color: #4af626; /* Matrix Green */
+    color: #4af626;
     max-height: 400px;
     overflow-y: auto;
     line-height: 1.5;
