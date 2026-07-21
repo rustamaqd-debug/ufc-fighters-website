@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Portal | Топ-15 Бойцов, Статистика Sherdog & Verdict</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Полная база данных рейтингов Топ-15 бойцов UFC. Статистика Sherdog (KO/Sub/Dec), показатели UFC Stats, Verdict Elo рейтинги и симулятор боев.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Oxanium:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="bg-glow red-glow"></div>
+    <div class="bg-glow gold-glow"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-ufc">UFC</span><span class="logo-sub">PORTAL</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-btn active" id="btn-fighters" data-target="section-fighters">
+                    <i class="fa-solid fa-user-ninja"></i> Бойцы
+                </button>
+                <button class="nav-btn" id="btn-matchup" data-target="section-matchup">
+                    <i class="fa-solid fa-circle-nodes"></i> Симулятор Боя
+                </button>
+                <button class="nav-btn" id="btn-champions" data-target="section-champions">
+                    <i class="fa-solid fa-crown"></i> Чемпионы
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="hero-section">
+        <div class="hero-banner" style="background-image: linear-gradient(rgba(11, 11, 12, 0.4), rgba(11, 11, 12, 0.95)), url('assets/hero_banner.png');">
+            <div class="hero-content">
+                <h1 class="hero-title">ТОП-15 РЕЙТИНГ UFC & SHERDOG STATS</h1>
+                <p class="hero-subtitle">Подробный разбор побед (KO/SUB/DEC), показатели активности UFC Stats и Verdict Elo рейтинги всех дивизионов</p>
+                <div class="hero-actions">
+                    <a href="#section-fighters" class="btn btn-primary">Смотреть ростер</a>
+                    <a href="#section-matchup" class="btn btn-secondary">Симулятор боя</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-content">
+        
+        <!-- SECTION 1: FIGHTERS CATALOG -->
+        <section id="section-fighters" class="content-section active">
+            <div class="section-header">
+                <h2>Официальный Ростер Бойцов</h2>
+                <div class="search-filter-container">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="fighter-search" placeholder="Поиск бойца по имени, прозвищу, стране...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rank Tier Filters -->
+            <div class="filters-container">
+                <div class="filter-label">Ранг в UFC:</div>
+                <div class="filter-chips" id="rank-filters">
+                    <button class="chip rank-chip active" data-rank="all">Все</button>
+                    <button class="chip rank-chip" data-rank="C"><i class="fa-solid fa-crown"></i> Чемпионы</button>
+                    <button class="chip rank-chip" data-rank="top5">🔥 Топ-5</button>
+                    <button class="chip rank-chip" data-rank="top15">🥊 Топ-15</button>
+                </div>
+            </div>
+
+            <!-- Category Weight Filters -->
+            <div class="filters-container">
+                <div class="filter-label">Дивизион:</div>
+                <div class="filter-chips" id="weight-filters">
+                    <button class="chip active" data-filter="all">Все веса</button>
+                    <button class="chip" data-filter="Heavyweight">Тяжелый</button>
+                    <button class="chip" data-filter="Light Heavyweight">Полутяжелый</button>
+                    <button class="chip" data-filter="Middleweight">Средний</button>
+                    <button class="chip" data-filter="Welterweight">Полусредний</button>
+                    <button class="chip" data-filter="Lightweight">Легкий</button>
+                    <button class="chip" data-filter="Featherweight">Полулегкий</button>
+                    <button class="chip" data-filter="Bantamweight">Легчайший</button>
+                    <button class="chip" data-filter="Flyweight">Наилегчайший</button>
+                    <button class="chip" data-filter="Strawweight">Женский минимальный</button>
+                    <button class="chip" data-filter="Women's Flyweight">Женский наилегчайший</button>
+                    <button class="chip" data-filter="Women's Bantamweight">Женский легчайший</button>
+                </div>
+            </div>
+
+            <!-- Fighters Grid -->
+            <div class="fighters-grid" id="fighters-grid-container">
+                <!-- Cards injected dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: MATCHUP SIMULATOR -->
+        <section id="section-matchup" class="content-section">
+            <div class="section-header">
+                <h2>Симулятор Боев (UFC Stats & Elo Engine)</h2>
+                <p>Выберите двух бойцов для симуляции с учетом данных SLpM (активности ударов), Takedown Def % и Sherdog finish rates.</p>
+            </div>
+
+            <div class="matchup-arena">
+                <!-- Fighter 1 Select -->
+                <div class="arena-side left-side">
+                    <div class="fighter-select-box" id="select-fighter-1">
+                        <div class="select-placeholder">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Выбрать бойца №1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VS Divider -->
+                <div class="arena-center">
+                    <div class="vs-glow-circle" id="start-simulation-btn">
+                        <span>VS</span>
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <div class="simulation-status-text" id="sim-tip">Нажмите на VS для симуляции</div>
+                </div>
+
+                <!-- Fighter 2 Select -->
+                <div class="arena-side right-side">
+                    <div class="fighter-select-box" id="select-fighter-2">
+                        <div class="select-placeholder">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Выбрать бойца №2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Compare Stats Panel -->
+            <div class="comparison-panel hidden" id="comparison-stats-panel">
+                <h3 class="panel-title">Сравнение Метрик & Verdict Ratings</h3>
+                <div class="comparison-bars" id="comparison-bars-container">
+                    <!-- Dynamic comparison bars -->
+                </div>
+            </div>
+
+            <!-- Simulation Terminal Output -->
+            <div class="simulation-console hidden" id="sim-console">
+                <div class="console-header">
+                    <div class="console-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="console-title">SIMULATION ENGINE v2.5 | SHERDOG & UFC STATS LOGS</div>
+                </div>
+                <div class="console-body" id="console-output">
+                    <!-- Round descriptions injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CHAMPIONS GALLERY -->
+        <section id="section-champions" class="content-section">
+            <div class="section-header">
+                <h2>Действующие Чемпионы Всех Дивизионов UFC</h2>
+                <p>Обладатели поясных титулов в мужских и женских категориях.</p>
+            </div>
+            
+            <div class="champions-grid" id="champions-grid-container">
+                <!-- Champions cards injected dynamically via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FIGHTER DETAIL MODAL -->
+    <div class="modal-overlay" id="fighter-modal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-grid">
+                <!-- Left Column: Portrait & Attributes -->
+                <div class="modal-left">
+                    <div class="modal-fighter-img-wrapper">
+                        <img src="" id="modal-img" alt="Fighter Image" onerror="this.onerror=null; this.src='assets/fighter_card_bg.png';">
+                    </div>
+                    <div class="modal-info-card">
+                        <div class="modal-rank-badge" id="modal-rank-tag">#C</div>
+                        <h3 id="modal-name">Fighter Name</h3>
+                        <p id="modal-nickname" class="modal-nickname">"Nickname"</p>
+                        
+                        <!-- Verdict Elo Badge -->
+                        <div class="verdict-badge-container">
+                            <i class="fa-solid fa-bolt"></i> Verdict Rating: <span id="modal-verdict-elo">980 Elo</span>
+                        </div>
+
+                        <div class="modal-meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">Страна</span>
+                                <span class="meta-value" id="modal-country">USA 🇺🇸</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Рекорд</span>
+                                <span class="meta-value highlight" id="modal-record">29-0-0</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Рост</span>
+                                <span class="meta-value" id="modal-height">178 cm</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Размах рук</span>
+                                <span class="meta-value" id="modal-reach">180 cm</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Стойка</span>
+                                <span class="meta-value" id="modal-stance">Southpaw</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Возраст</span>
+                                <span class="meta-value" id="modal-age">32 года</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Skills, Sherdog Breakdown & UFC Stats -->
+                <div class="modal-right">
+                    <!-- Tabbed or stacked metrics -->
+                    <div class="radar-chart-section">
+                        <h4>Анализ Навыков (Radar Chart)</h4>
+                        <div class="canvas-container">
+                            <canvas id="radar-chart" width="280" height="280"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Sherdog Finish Distribution -->
+                    <div class="sherdog-section">
+                        <h4><i class="fa-solid fa-chart-pie"></i> Sherdog: Способы Побед</h4>
+                        <div class="sherdog-bar-wrapper">
+                            <div class="sherdog-bar">
+                                <div class="sherdog-segment ko-seg" id="sherdog-ko-bar" title="Knockout"></div>
+                                <div class="sherdog-segment sub-seg" id="sherdog-sub-bar" title="Submission"></div>
+                                <div class="sherdog-segment dec-seg" id="sherdog-dec-bar" title="Decision"></div>
+                            </div>
+                            <div class="sherdog-legend">
+                                <span class="legend-item ko"><i class="fa-solid fa-square"></i> KO/TKO: <strong id="sherdog-ko-val">0</strong></span>
+                                <span class="legend-item sub"><i class="fa-solid fa-square"></i> SUB: <strong id="sherdog-sub-val">0</strong></span>
+                                <span class="legend-item dec"><i class="fa-solid fa-square"></i> DEC: <strong id="sherdog-dec-val">0</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UFC Advanced Metrics -->
+                    <div class="ufc-stats-section">
+                        <h4><i class="fa-solid fa-gauge-high"></i> UFC Advanced Stats</h4>
+                        <div class="ufc-stats-grid">
+                            <div class="ufc-stat-box">
+                                <div class="stat-box-val" id="ufc-slpm">4.50</div>
+                                <div class="stat-box-lbl">Ударов в мин (SLpM)</div>
+                            </div>
+                            <div class="ufc-stat-box">
+                                <div class="stat-box-val" id="ufc-str-acc">55%</div>
+                                <div class="stat-box-lbl">Точность ударов</div>
+                            </div>
+                            <div class="ufc-stat-box">
+                                <div class="stat-box-val" id="ufc-sapm">2.10</div>
+                                <div class="stat-box-lbl">Пропускает в мин (SApM)</div>
+                            </div>
+                            <div class="ufc-stat-box">
+                                <div class="stat-box-val" id="ufc-td-def">85%</div>
+                                <div class="stat-box-lbl">Защита от тейкдаунов</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bio-section">
+                        <h4>Биография</h4>
+                        <p id="modal-bio">Detailed bio here...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIGHTER SELECTION MODAL (For Simulator) -->
+    <div class="modal-overlay" id="select-modal">
+        <div class="modal-card select-modal-card">
+            <div class="select-modal-header">
+                <h3>Выберите бойца</h3>
+                <button class="modal-close-btn" id="select-modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="select-grid" id="select-grid-container">
+                <!-- Small selection cards injected here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 UFC Portal. Интегрированная статистика Sherdog, UFC Stats & Verdict MMA.</p>
+        <p class="footer-note">Данный сайт разработан в демонстрационных целях.</p>
+    </footer>
+
+    <!-- JS Files -->
+    <script src="fighters.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
