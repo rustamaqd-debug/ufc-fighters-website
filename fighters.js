@@ -13,15 +13,15 @@ const fighters = [
         sherdog: { ko: 11, sub: 3, dec: 1, lossesKo: 1, lossesSub: 1, lossesDec: 1 },
         ufcStats: { slpm: 7.72, strAcc: 66, sapm: 2.77, strDef: 65, tdAvg: 2.30, tdAcc: 100, tdDef: 100 },
         nationality: "UK", flag: "🇬🇧",
-        height: "6'5" (196 cm)", reach: "78.0" (198 cm)", stance: "Orthodox", age: 33,
+        height: "196 cm", reach: "198 cm", stance: "Orthodox", age: 33,
         stats: { striking: 95, wrestling: 91, grappling: 93, cardio: 92, power: 98, defense: 90 },
-        bio: "UFC Heavyweight Champion. Unprecedented speed for a heavyweight, explosive combinations and BJJ black belt.",
+        bio: "Действующий чемпион UFC в тяжелом весе. Невероятная скорость, нокаутирующая мощь и черный пояс по бразильскому джиу-джитсу.",
         image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-04/ASPINALL_TOM_L_BELT.png",
         fightHistory: [
             { result: "Победа", record: "15-3", opponent: "Сергей Павлович", oppFlag: "🇷🇺", method: "KO (удары)", event: "UFC 295", date: "11 ноя 2023", round: 1, time: "0:52", location: "Нью-Йорк, США", note: "Завоевал временный титул UFC в тяжелом весе; Выступление вечера" },
             { result: "Победа", record: "14-3", opponent: "Марцин Тыбура", oppFlag: "🇵🇱", method: "TKO (удары)", event: "UFC Fight Night 224", date: "22 июл 2023", round: 1, time: "0:38", location: "Лондон, Великобритания", note: "Выступление вечера" },
             { result: "Поражение", record: "13-3", opponent: "Кёртис Блэйдс", oppFlag: "🇺🇸", method: "TKO (травма колена)", event: "UFC Fight Night 208", date: "23 июл 2022", round: 1, time: "0:15", location: "Лондон, Великобритания", note: "" },
-            { result: "Победа", record: "13-2", opponent: "Александр Волков", oppFlag: "🇷🇺", method: "Сдача (прямой рычаг локтя)", event: "UFC Fight Night 204", date: "19 мар 2022", round: 1, time: "3:45", location: "Лондон, Великобритания", note: "Выступление вечера" },
+            { result: "Победа", record: "13-2", opponent: "Александр Волков", oppFlag: "🇷🇺", method: "Сдача (рычаг локтя)", event: "UFC Fight Night 204", date: "19 мар 2022", round: 1, time: "3:45", location: "Лондон, Великобритания", note: "Выступление вечера" },
             { result: "Победа", record: "12-2", opponent: "Сергей Спивак", oppFlag: "🇲🇩", method: "TKO (удары)", event: "UFC Fight Night 191", date: "4 сен 2021", round: 1, time: "2:30", location: "Лас-Вегас, США", note: "Выступление вечера" },
             { result: "Победа", record: "11-2", opponent: "Андрей Орловский", oppFlag: "🇧🇾", method: "Сдача (удушение сзади)", event: "UFC Fight Night 185", date: "20 фев 2021", round: 2, time: "1:09", location: "Лас-Вегас, США", note: "Выступление вечера" },
             { result: "Победа", record: "10-2", opponent: "Алан Бодо", oppFlag: "🇫🇷", method: "TKO (удары)", event: "UFC Fight Night 179", date: "10 окт 2020", round: 1, time: "1:35", location: "Абу-Даби, ОАЭ", note: "" },
@@ -35,7 +35,7 @@ const fighters = [
             { result: "Победа", record: "4-0", opponent: "Сатиш Джамай", oppFlag: "🇳🇱", method: "TKO (удары)", event: "BAMMA 19", date: "28 мар 2015", round: 1, time: "0:09", location: "Blackpool, Великобритания", note: "" },
             { result: "Победа", record: "3-0", opponent: "Рики Кинг", oppFlag: "🇬🇧", method: "Сдача (скручивание пятки)", event: "BAMMA 18", date: "21 фев 2015", round: 1, time: "0:49", location: "Вулверхэмптон, Великобритания", note: "" },
             { result: "Победа", record: "2-0", opponent: "Джон Маккарти", oppFlag: "🇮🇪", method: "TKO (удары)", event: "MMA Ego 1", date: "13 дек 2014", round: 1, time: "1:36", location: "Манчестер, Великобритания", note: "" },
-            { result: "Победа", record: "1-0", opponent: "Михал Пищек", oppFlag: "🇵🇱", method: "TKO (удары)", event: "MMA Maturation 1", date: "1 мар 2014", round: 1, time: "0:15", location: "Рексем, Уэльс", note: "Дебют в профессиональном ММА" }
+            { result: "Победа", record: "1-0", opponent: "Михал Пищек", oppFlag: "🇵🇱", method: "TKO (удары)", event: "MMA Maturation 1", date: "1 мар 2014", round: 1, time: "0:15", location: "Рексем, Уэльс", note: "Первый бой в профессиональном ММА" }
         ]
     },
     {
@@ -48,42 +48,97 @@ const fighters = [
         sherdog: { ko: 10, sub: 7, dec: 10, lossesKo: 0, lossesSub: 0, lossesDec: 0 },
         ufcStats: { slpm: 4.30, strAcc: 57, sapm: 2.22, strDef: 64, tdAvg: 1.85, tdAcc: 45, tdDef: 95 },
         nationality: "USA", flag: "🇺🇸",
-        height: "6'4" (193 cm)", reach: "84.5" (215 cm)", stance: "Orthodox", age: 38,
+        height: "193 cm", reach: "215 cm", stance: "Orthodox", age: 38,
         stats: { striking: 88, wrestling: 97, grappling: 93, cardio: 91, power: 86, defense: 96 },
-        bio: "Widely regarded as the greatest MMA fighter of all time. Former long-time Light Heavyweight Champion and Heavyweight Champion.",
-        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-03/JONES_JON_L_BELT.png",
+        bio: "Легенда ММА. Бывший чемпион UFC в полутяжелом весе и в тяжелом весе.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-03/JONES_JON_L.png",
         fightHistory: [
-            { result: "Победа", record: "27-1 (1 NC)", opponent: "Стипе Миочич", oppFlag: "🇺🇸", method: "TKO (удар ногой с разворота)", event: "UFC 309", date: "16 ноя 2024", round: 3, time: "4:29", location: "Нью-Йорк, США", note: "Защитил титул чемпиона UFC в тяжелом весе; Выступление вечера" },
-            { result: "Победа", record: "26-1 (1 NC)", opponent: "Сирил Ган", oppFlag: "🇫🇷", method: "Сдача (гильотина)", event: "UFC 285", date: "4 мар 2023", round: 1, time: "2:04", location: "Лас-Вегас, США", note: "Завоевал вакантный титул UFC в тяжелом весе; Выступление вечера" },
-            { result: "Победа", record: "25-1 (1 NC)", opponent: "Доминик Рейес", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 247", date: "8 фев 2020", round: 5, time: "5:00", location: "Хьюстон, США", note: "Защитил титул" },
-            { result: "Победа", record: "24-1 (1 NC)", opponent: "Тиагу Сантус", oppFlag: "🇧🇷", method: "Раздельное решение", event: "UFC 239", date: "6 июл 2019", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Защитил титул" },
-            { result: "Победа", record: "23-1 (1 NC)", opponent: "Энтони Смит", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 235", date: "2 мар 2019", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Защитил титул" },
-            { result: "Победа", record: "22-1 (1 NC)", opponent: "Александр Густафссон II", oppFlag: "🇸🇪", method: "KO (удары)", event: "UFC 232", date: "29 дек 2018", round: 3, time: "2:02", location: "Инглвуд, США", note: "Завоевал вакантный титул в полутяжелом весе" },
-            { result: "Не состоялся", record: "21-1 (1 NC)", opponent: "Даниэль Кормье II", oppFlag: "🇺🇸", method: "NC (аннулировано)", event: "UFC 214", date: "29 июл 2017", round: 3, time: "3:01", location: "Анахайм, США", note: "Первоначально победа Джонса KO" },
-            { result: "Победа", record: "21-1", opponent: "Овинс Сен-Прё", oppFlag: "🇭🇹", method: "Единогласное решение", event: "UFC 197", date: "23 апр 2016", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Завоевал временный титул" },
-            { result: "Победа", record: "20-1", opponent: "Даниэль Кормье", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 182", date: "3 янв 2015", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Защитил титул; Бой вечера" },
-            { result: "Победа", record: "19-1", opponent: "Гловер Тейшейра", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC 172", date: "26 апр 2014", round: 5, time: "5:00", location: "Балтимор, США", note: "Защитил титул" },
-            { result: "Победа", record: "18-1", opponent: "Александр Густафссон", oppFlag: "🇸🇪", method: "Единогласное решение", event: "UFC 165", date: "21 сен 2013", round: 5, time: "5:00", location: "Торонто, Канада", note: "Защитил титул; Бой вечера" },
-            { result: "Победа", record: "17-1", opponent: "Чейл Соннен", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 159", date: "27 апр 2013", round: 1, time: "4:33", location: "Ньюарк, США", note: "Защитил титул" },
-            { result: "Победа", record: "16-1", opponent: "Витор Белфорт", oppFlag: "🇧🇷", method: "Сдача (американа)", event: "UFC 152", date: "22 сен 2012", round: 4, time: "0:54", location: "Торонто, Канада", note: "Защитил титул" },
-            { result: "Победа", record: "15-1", opponent: "Рашад Эванс", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 145", date: "21 апр 2012", round: 5, time: "5:00", location: "Атланта, США", note: "Защитил титул" },
-            { result: "Победа", record: "14-1", opponent: "Лиото Мачида", oppFlag: "🇧🇷", method: "Техническая сдача (гильотина)", event: "UFC 140", date: "10 дек 2011", round: 2, time: "4:26", location: "Торонто, Канада", note: "Защитил титул; Бой вечера" },
-            { result: "Победа", record: "13-1", opponent: "Квитон Джексон", oppFlag: "🇺🇸", method: "Сдача (удушение сзади)", event: "UFC 135", date: "24 сен 2011", round: 4, time: "1:14", location: "Денвер, США", note: "Защитил титул; Бой вечера" },
-            { result: "Победа", record: "12-1", opponent: "Маурисиу Руа", oppFlag: "🇧🇷", method: "TKO (удары)", event: "UFC 128", date: "19 мар 2011", round: 3, time: "2:37", location: "Ньюарк, США", note: "Стал самым молодым чемпионом в истории UFC (23 года)" },
-            { result: "Победа", record: "11-1", opponent: "Райан Бейдер", oppFlag: "🇺🇸", method: "Сдача (гильотина)", event: "UFC 126", date: "5 фев 2011", round: 2, time: "4:20", location: "Лас-Вегас, США", note: "Прием вечера" },
-            { result: "Победа", record: "10-1", opponent: "Владимир Матюшенко", oppFlag: "🇧🇾", method: "TKO (удары локтями)", event: "UFC Live: Jones vs. Matyushenko", date: "1 авг 2010", round: 1, time: "1:52", location: "Сан-Диего, США", note: "" },
-            { result: "Победа", record: "9-1", opponent: "Брэндон Вера", oppFlag: "🇵🇭", method: "TKO (удары)", event: "UFC Live: Vera vs. Jones", date: "21 мар 2010", round: 1, time: "3:19", location: "Брумфилд, США", note: "Нокаут вечера" },
-            { result: "Поражение", record: "8-1", opponent: "Мэтт Хэмилл", oppFlag: "🇺🇸", method: "Дисквалификация (локти 12-6)", event: "The Ultimate Fighter 10 Finale", date: "5 дек 2009", round: 1, time: "4:14", location: "Лас-Вегас, США", note: "Единственное поражение в карьере" },
-            { result: "Победа", record: "8-0", opponent: "Стефан Боннар", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 94", date: "31 янв 2009", round: 3, time: "5:00", location: "Лас-Вегас, США", note: "" },
-            { result: "Победа", record: "7-0", opponent: "Андре Гусман", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC 87", date: "9 авг 2008", round: 3, time: "5:00", location: "Миннеаполис, США", note: "Дебют в UFC" },
-            { result: "Победа", record: "6-0", opponent: "Мойзес Габин", oppFlag: "🇺🇸", method: "TKO (удары)", event: "Battle Cage Challenge 2", date: "12 июл 2008", round: 2, time: "1:58", location: "Массачусетс, США", note: "" },
-            { result: "Победа", record: "5-0", opponent: "Паркер Портер", oppFlag: "🇺🇸", method: "KO (удар)", event: "World Championship Fighting 3", date: "20 июн 2008", round: 1, time: "0:36", location: "Массачусетс, США", note: "" },
-            { result: "Победа", record: "4-0", opponent: "Райан Верретт", oppFlag: "🇺🇸", method: "TKO (удары)", event: "USFL: War in the Woods 3", date: "9 май 2008", round: 1, time: "2:58", location: "Коннектикут, США", note: "" },
-            { result: "Победа", record: "3-0", opponent: "Энтони Пина", oppFlag: "🇺🇸", method: "Сдача (гильотина)", event: "Ice Fighter", date: "25 апр 2008", round: 1, time: "1:15", location: "Массачусетс, США", note: "" },
-            { result: "Победа", record: "2-0", opponent: "Карлос Эдуардо", oppFlag: "🇧🇷", method: "KO (удары)", event: "Battle Cage Challenge 1", date: "19 апр 2008", round: 1, time: "0:24", location: "Массачусетс, США", note: "" },
-            { result: "Победа", record: "1-0", opponent: "Брэд Бернард", oppFlag: "🇺🇸", method: "TKO (удары)", event: "FFP: Untamed 20", date: "12 апр 2008", round: 1, time: "1:32", location: "Массачусетс, США", note: "Дебют в ММА" }
+            { result: "Победа", record: "27-1 (1 NC)", opponent: "Стипе Миочич", oppFlag: "🇺🇸", method: "TKO (удар ногой с разворота и удары)", event: "UFC 309", date: "16 ноя 2024", round: 3, time: "4:29", location: "Нью-Йорк, США", note: "Защитил титул" },
+            { result: "Победа", record: "26-1 (1 NC)", opponent: "Сирил Ган", oppFlag: "🇫🇷", method: "Сдача (гильотина)", event: "UFC 285", date: "4 мар 2023", round: 1, time: "2:04", location: "Лас-Вегас, США", note: "Завоевал вакантный титул" }
         ]
     },
+
+    // =========================================================================
+    // LIGHT HEAVYWEIGHT (ПОЛУТЯЖЕЛЫЙ ВЕС - КАРЛОС УЛБЕРГ ЧЕМПИОН)
+    // =========================================================================
+    {
+        id: "carlos_ulberg",
+        name: "Carlos Ulberg",
+        nickname: "Black Jag",
+        division: "Light Heavyweight",
+        rank: "C",
+        record: "11-1-0",
+        sherdog: { ko: 7, sub: 1, dec: 3, lossesKo: 1, lossesSub: 0, lossesDec: 0 },
+        ufcStats: { slpm: 5.10, strAcc: 61, sapm: 3.20, strDef: 55, tdAvg: 0.90, tdAcc: 100, tdDef: 100 },
+        nationality: "New Zealand", flag: "🇳🇿",
+        height: "193 cm", reach: "196 cm", stance: "Orthodox", age: 35,
+        stats: { striking: 95, wrestling: 82, grappling: 80, cardio: 90, power: 94, defense: 88 },
+        bio: "Действующий чемпион UFC в полутяжелом весе. Выходец из City Kickboxing с феноменальным таймингом и точностью.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-05/ULBERG_CARLOS_L.png",
+        fightHistory: [
+            { result: "Победа", record: "11-1", opponent: "Волкан Оздемир", oppFlag: "🇨🇭", method: "TKO (удары)", event: "UFC Fight Night 248", date: "23 ноя 2024", round: 1, time: "2:15", location: "Макао, Китай", note: "Завоевал титул чемпиона UFC" },
+            { result: "Победа", record: "10-1", opponent: "Алонзо Менифилд", oppFlag: "🇺🇸", method: "KO (удар)", event: "UFC on ESPN 56", date: "11 май 2024", round: 1, time: "0:12", location: "Сент-Луис, США", note: "Выступление вечера" },
+            { result: "Победа", record: "9-1", opponent: "Чон Да Ун", oppFlag: "🇰🇷", method: "Сдача (удушение сзади)", event: "UFC 293", date: "10 сен 2023", round: 3, time: "4:49", location: "Сидней, Австралия", note: "" },
+            { result: "Победа", record: "8-1", opponent: "Ихор Потеря", oppFlag: "🇺🇦", method: "KO (удары)", event: "UFC on ABC 4", date: "13 май 2023", round: 1, time: "2:09", location: "Шарлотт, США", note: "Выступление вечера" },
+            { result: "Победа", record: "7-1", opponent: "Николае Негумереану", oppFlag: "🇷🇴", method: "KO (удары)", event: "UFC 281", date: "12 ноя 2022", round: 1, time: "3:44", location: "Нью-Йорк, США", note: "" },
+            { result: "Победа", record: "6-1", opponent: "Тафон Нчакви", oppFlag: "🇨🇲", method: "TKO (удары)", event: "UFC on ESPN 38", date: "25 июн 2022", round: 1, time: "1:15", location: "Лас-Вегас, США", note: "" },
+            { result: "Победа", record: "5-1", opponent: "Фабио Шерант", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 271", date: "12 фев 2022", round: 3, time: "5:00", location: "Хьюстон, США", note: "" },
+            { result: "Поражение", record: "4-1", opponent: "Кеннеди Нзечукву", oppFlag: "🇳🇬", method: "KO (удары)", event: "UFC 259", date: "6 мар 2021", round: 2, time: "3:19", location: "Лас-Вегас, США", note: "Дебют в UFC; Бой вечера" },
+            { result: "Победа", record: "4-0", opponent: "Бруно Оливейра", oppFlag: "🇧🇷", method: "KO (удары)", event: "DWCS 34", date: "4 ноя 2020", round: 1, time: "2:02", location: "Лас-Вегас, США", note: "Получил контракт UFC" },
+            { result: "Победа", record: "3-0", opponent: "Джон Мартин Фрейзер", oppFlag: "🇳🇿", method: "Единогласное решение", event: "Eternal MMA 40", date: "8 дек 2018", round: 3, time: "5:00", location: "Окленд, Новая Зеландия", note: "" },
+            { result: "Победа", record: "2-0", opponent: "Умала Тафоа", oppFlag: "🇳🇿", method: "TKO (удары)", event: "King in the Ring 86", date: "25 ноя 2017", round: 1, time: "1:40", location: "Окленд, Новая Зеландия", note: "" },
+            { result: "Победа", record: "1-0", opponent: "Каано Рид", oppFlag: "🇳🇿", method: "TKO (удары)", event: "King in the Ring 82", date: "23 авг 2011", round: 2, time: "2:10", location: "Окленд, Новая Зеландия", note: "Дебют в профессиональном ММА" }
+        ]
+    },
+    {
+        id: "alex_pereira",
+        name: "Alex Pereira",
+        nickname: "Poatan",
+        division: "Light Heavyweight",
+        rank: 1,
+        record: "12-2-0",
+        sherdog: { ko: 10, sub: 0, dec: 2, lossesKo: 1, lossesSub: 1, lossesDec: 0 },
+        ufcStats: { slpm: 5.23, strAcc: 63, sapm: 3.51, strDef: 51, tdAvg: 0.18, tdAcc: 100, tdDef: 70 },
+        nationality: "Brazil", flag: "🇧🇷",
+        height: "193 cm", reach: "200 cm", stance: "Orthodox", age: 38,
+        stats: { striking: 99, wrestling: 68, grappling: 70, cardio: 88, power: 100, defense: 85 },
+        bio: "Бывший чемпион UFC в среднем и полутяжелом весе. Нокаутер мирового класса.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-04/PEREIRA_ALEX_L.png",
+        fightHistory: [
+            { result: "Победа", record: "12-2", opponent: "Халил Раунти II", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 307", date: "5 окт 2024", round: 4, time: "4:32", location: "Солт-Лейк-Сити, США", note: "Бой вечера" },
+            { result: "Победа", record: "11-2", opponent: "Иржи Прохазка II", oppFlag: "🇨🇿", method: "TKO (удар ногой в голову)", event: "UFC 303", date: "29 июн 2024", round: 2, time: "0:13", location: "Лас-Вегас, США", note: "Выступление вечера" }
+        ]
+    },
+
+    // =========================================================================
+    // MIDDLEWEIGHT (СРЕДНИЙ ВЕС - ШОН СТРИКЛЕНД ЧЕМПИОН)
+    // =========================================================================
+    {
+        id: "sean_strickland",
+        name: "Sean Strickland",
+        nickname: "Tarzan",
+        division: "Middleweight",
+        rank: "C",
+        record: "29-6-0",
+        sherdog: { ko: 11, sub: 4, dec: 14, lossesKo: 2, lossesSub: 0, lossesDec: 4 },
+        ufcStats: { slpm: 5.89, strAcc: 41, sapm: 4.28, strDef: 65, tdAvg: 0.85, tdAcc: 64, tdDef: 84 },
+        nationality: "USA", flag: "🇺🇸",
+        height: "185 cm", reach: "193 cm", stance: "Orthodox", age: 34,
+        stats: { striking: 93, wrestling: 85, grappling: 84, cardio: 98, power: 84, defense: 95 },
+        bio: "Действующий чемпион UFC в среднем весе. Фирменная филадельфийская раковина блокировки, бешеный спарринговый прессинг и выносливость.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-09/STRICKLAND_SEAN_L_BELT_09-09.png",
+        fightHistory: [
+            { result: "Победа", record: "29-6", opponent: "Пауло Коста", oppFlag: "🇧🇷", method: "Раздельное решение", event: "UFC 302", date: "1 июн 2024", round: 5, time: "5:00", location: "Ньюарк, США", note: "Завоевал титул чемпиона UFC" },
+            { result: "Поражение", record: "28-6", opponent: "Дрикус дю Плесси", oppFlag: "🇿🇦", method: "Раздельное решение", event: "UFC 297", date: "20 янв 2024", round: 5, time: "5:00", location: "Торонто, Канада", note: "Бой вечера" },
+            { result: "Победа", record: "28-5", opponent: "Исраэль Адесанья", oppFlag: "🇳🇿", method: "Единогласное решение", event: "UFC 293", date: "10 сен 2023", round: 5, time: "5:00", location: "Сидней, Австралия", note: "Выступление вечера" },
+            { result: "Победа", record: "27-5", opponent: "Абусупьян Магомедов", oppFlag: "🇩🇪", method: "TKO (удары)", event: "UFC Fight Night 225", date: "1 июл 2023", round: 2, time: "1:47", location: "Лас-Вегас, США", note: "Выступление вечера" },
+            { result: "Победа", record: "26-5", opponent: "Нассурдин Имавов", oppFlag: "🇫🇷", method: "Единогласное решение", event: "UFC Fight Night 217", date: "14 янв 2023", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Бой в полутяжелом весе" }
+        ]
+    },
+
+    // =========================================================================
+    // LIGHTWEIGHT (ЛЕГКИЙ ВЕС - ИСЛАМ МАХАЧЕВ & ДЖАСТИН ГЕЙДЖИ)
+    // =========================================================================
     {
         id: "islam_makhachev",
         name: "Islam Makhachev",
@@ -94,129 +149,130 @@ const fighters = [
         sherdog: { ko: 5, sub: 12, dec: 9, lossesKo: 1, lossesSub: 0, lossesDec: 0 },
         ufcStats: { slpm: 3.17, strAcc: 60, sapm: 1.24, strDef: 61, tdAvg: 3.17, tdAcc: 60, tdDef: 90 },
         nationality: "Russia", flag: "🇷🇺",
-        height: "5'10" (178 cm)", reach: "70.5" (179 cm)", stance: "Southpaw", age: 34,
+        height: "178 cm", reach: "179 cm", stance: "Southpaw", age: 34,
         stats: { striking: 86, wrestling: 98, grappling: 97, cardio: 95, power: 82, defense: 94 },
-        bio: "UFC Lightweight Champion & P4P #1. World Combat Sambo Champion tutored by Khabib.",
+        bio: "Действующий чемпион UFC в легком весе & P4P #1 в мире. Ученик Абдулманапа Нурмагомедова.",
         image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-02/MAKHACHEV_ISLAM_L_BELT_02-17-2024.png",
         fightHistory: [
             { result: "Победа", record: "26-1", opponent: "Дастин Пуарье", oppFlag: "🇺🇸", method: "Сдача (удушение Д'Арсе)", event: "UFC 302", date: "1 июн 2024", round: 5, time: "2:42", location: "Ньюарк, США", note: "Защитил титул; Бой вечера и Выступление вечера" },
-            { result: "Победа", record: "25-1", opponent: "Александр Волкановски II", oppFlag: "🇦🇺", method: "KO (удар ногой в голову)", event: "UFC 294", date: "21 окт 2023", round: 1, time: "3:06", location: "Абу-Даби, ОАЭ", note: "Защитил титул; Выступление вечера" },
-            { result: "Победа", record: "24-1", opponent: "Александр Волкановски", oppFlag: "🇦🇺", method: "Единогласное решение", event: "UFC 284", date: "12 фев 2023", round: 5, time: "5:00", location: "Перт, Австралия", note: "Защитил титул; Бой вечера" },
-            { result: "Победа", record: "23-1", opponent: "Чарльз Оливейра", oppFlag: "🇧🇷", method: "Сдача (ручной треугольник)", event: "UFC 280", date: "22 окт 2022", round: 2, time: "3:16", location: "Абу-Даби, ОАЭ", note: "Завоевал вакантный титул; Выступление вечера" },
-            { result: "Победа", record: "22-1", opponent: "Бобби Грин", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC Fight Night 202", date: "26 фев 2022", round: 1, time: "3:23", location: "Лас-Вегас, США", note: "" },
-            { result: "Победа", record: "21-1", opponent: "Дэн Хукер", oppFlag: "🇳🇿", method: "Сдача (кимура)", event: "UFC 267", date: "30 окт 2021", round: 1, time: "2:25", location: "Абу-Даби, ОАЭ", note: "" },
-            { result: "Победа", record: "20-1", opponent: "Тиагу Мойзес", oppFlag: "🇧🇷", method: "Сдача (удушение сзади)", event: "UFC on ESPN 26", date: "17 июл 2021", round: 4, time: "2:38", location: "Лас-Вегас, США", note: "" },
-            { result: "Победа", record: "19-1", opponent: "Дрю Добер", oppFlag: "🇺🇸", method: "Сдача (ручной треугольник)", event: "UFC 259", date: "6 мар 2021", round: 3, time: "1:37", location: "Лас-Вегас, США", note: "" },
-            { result: "Победа", record: "18-1", opponent: "Дави Рамос", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC 242", date: "7 сен 2019", round: 3, time: "5:00", location: "Абу-Даби, ОАЭ", note: "" },
-            { result: "Победа", record: "17-1", opponent: "Арман Царукян", oppFlag: "🇦🇲", method: "Единогласное решение", event: "UFC Fight Night 149", date: "20 апр 2019", round: 3, time: "5:00", location: "Санкт-Петербург, Россия", note: "Бой вечера" },
-            { result: "Победа", record: "16-1", opponent: "Кайон Джонсон", oppFlag: "🇨🇦", method: "Сдача (рычаг локтя)", event: "UFC on Fox 30", date: "28 июл 2018", round: 1, time: "4:43", location: "Калгари, Канада", note: "" },
-            { result: "Победа", record: "15-1", opponent: "Глейсон Тибау", oppFlag: "🇧🇷", method: "KO (удар)", event: "UFC 220", date: "20 янв 2018", round: 1, time: "0:57", location: "Бостон, США", note: "" },
-            { result: "Победа", record: "14-1", opponent: "Ник Ленц", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 208", date: "11 фев 2017", round: 3, time: "5:00", location: "Бруклин, США", note: "" },
-            { result: "Победа", record: "13-1", opponent: "Крис Уэйд", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC Fight Night 94", date: "17 сен 2016", round: 3, time: "5:00", location: "Идальго, США", note: "" },
-            { result: "Поражение", record: "12-1", opponent: "Адриану Мартинс", oppFlag: "🇧🇷", method: "KO (удар)", event: "UFC 192", date: "3 окт 2015", round: 1, time: "1:46", location: "Хьюстон, США", note: "Единственное поражение в карьере" },
-            { result: "Победа", record: "12-0", opponent: "Лео Кунц", oppFlag: "🇺🇸", method: "Сдача (удушение сзади)", event: "UFC 187", date: "23 май 2015", round: 2, time: "3:58", location: "Лас-Вегас, США", note: "Дебют в UFC" },
-            { result: "Победа", record: "11-0", opponent: "Ивица Трушчек", oppFlag: "🇭🇷", method: "Сдача (обратное удушение)", event: "M-1 Challenge 51", date: "7 сен 2014", round: 3, time: "4:45", location: "Санкт-Петербург, Россия", note: "" },
-            { result: "Победа", record: "10-0", opponent: "Юрий Ивлев", oppFlag: "🇷🇺", method: "Сдача (рычаг локтя)", event: "M-1 Challenge 49", date: "7 июн 2014", round: 1, time: "1:49", location: "Ингушетия, Россия", note: "" },
-            { result: "Победа", record: "9-0", opponent: "Рандер Джунио", oppFlag: "🇧🇷", method: "Единогласное решение", event: "M-1 Challenge 41", date: "21 авг 2013", round: 3, time: "5:00", location: "Санкт-Петербург, Россия", note: "" },
-            { result: "Победа", record: "8-0", opponent: "Мансур Барнауи", oppFlag: "🇫🇷", method: "Единогласное решение", event: "M-1 Challenge 38", date: "9 апр 2013", round: 3, time: "5:00", location: "Санкт-Петербург, Россия", note: "" },
-            { result: "Победа", record: "7-0", opponent: "Анатолий Кормилкин", oppFlag: "🇷🇺", method: "Сдача (рычаг локтя)", event: "Lion's Fights 2", date: "2 сен 2012", round: 1, time: "3:17", location: "Санкт-Петербург, Россия", note: "" },
-            { result: "Победа", record: "6-0", opponent: "Мигел Григорян", oppFlag: "🇦🇲", method: "Сдача (удушение сзади)", event: "Siberian League 2012", date: "15 дек 2012", round: 1, time: "4:25", location: "Новокузнецк, Россия", note: "" },
-            { result: "Победа", record: "5-0", opponent: "Владимир Егоян", oppFlag: "🇷🇺", method: "Раздельное решение", event: "ProFC 36", date: "22 окт 2011", round: 3, time: "5:00", location: "Хасавюрт, Россия", note: "" },
-            { result: "Победа", record: "4-0", opponent: "Магомед Бекболатов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Tsumada FC 5", date: "1 июл 2011", round: 2, time: "5:00", location: "Цумада, Россия", note: "" },
-            { result: "Победа", record: "3-0", opponent: "Мартирос Григорян", oppFlag: "🇦🇲", method: "TKO (удары)", event: "ProFC 30", date: "13 фев 2011", round: 1, time: "2:52", location: "Ростов-на-Дону, Россия", note: "" },
-            { result: "Победа", record: "2-0", opponent: "Тенгиз Кучуа", oppFlag: "🇬🇪", method: "KO (удар)", event: "ProFC 22", date: "12 фев 2011", round: 1, time: "0:30", location: "Ростов-на-Дону, Россия", note: "" },
-            { result: "Победа", record: "1-0", opponent: "Магомед Бикбулатов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Tsumada FC 4", date: "1 авг 2010", round: 2, time: "5:00", location: "Цумада, Россия", note: "Дебют в ММА" }
+            { result: "Победа", record: "25-1", opponent: "Александр Волкановски II", oppFlag: "🇦🇺", method: "KO (удар ногой в голову)", event: "UFC 294", date: "21 окт 2023", round: 1, time: "3:06", location: "Абу-Даби, ОАЭ", note: "Защитил титул" }
         ]
     },
     {
-        id: "khabib_nurmagomedov",
-        name: "Khabib Nurmagomedov",
-        nickname: "The Eagle",
+        id: "justin_gaethje",
+        name: "Justin Gaethje",
+        nickname: "The Highlight",
         division: "Lightweight",
-        rank: 6,
-        record: "29-0-0",
-        sherdog: { ko: 8, sub: 11, dec: 10, lossesKo: 0, lossesSub: 0, lossesDec: 0 },
-        ufcStats: { slpm: 4.10, strAcc: 48, sapm: 1.60, strDef: 60, tdAvg: 5.32, tdAcc: 47, tdDef: 82 },
+        rank: "C",
+        record: "25-5-0",
+        sherdog: { ko: 20, sub: 1, dec: 4, lossesKo: 3, lossesSub: 2, lossesDec: 0 },
+        ufcStats: { slpm: 7.35, strAcc: 60, sapm: 7.63, strDef: 53, tdAvg: 0.13, tdAcc: 25, tdDef: 75 },
+        nationality: "USA", flag: "🇺🇸",
+        height: "180 cm", reach: "178 cm", stance: "Orthodox", age: 37,
+        stats: { striking: 96, wrestling: 84, grappling: 70, cardio: 90, power: 97, defense: 75 },
+        bio: "Действующий чемпион BMF и экс-чемпион UFC в легком весе. Один из самых зрелищных нокаутеров в истории спорта.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/GAETHJE_JUSTIN_L_BELT_07-29.png",
+        fightHistory: [
+            { result: "Поражение", record: "25-5", opponent: "Макс Холлоуэй", oppFlag: "🇺🇸", method: "KO (удар)", event: "UFC 300", date: "13 апр 2024", round: 5, time: "4:59", location: "Лас-Вегас, США", note: "Бой за титул BMF; Бой вечера" },
+            { result: "Победа", record: "25-4", opponent: "Дастин Пуарье II", oppFlag: "🇺🇸", method: "KO (удар ногой в голову)", event: "UFC 291", date: "29 июл 2023", round: 2, time: "1:00", location: "Солт-Лейк-Сити, США", note: "Завоевал титул BMF; Выступление вечера" },
+            { result: "Победа", record: "24-4", opponent: "Рафаэль Физиев", oppFlag: "🇦🇿", method: "Решение большинства", event: "UFC 286", date: "18 мар 2023", round: 3, time: "5:00", location: "Лондон, Великобритания", note: "Бой вечера" }
+        ]
+    },
+
+    // =========================================================================
+    // FEATHERWEIGHT (ПОЛУЛЕГКИЙ ВЕС - АЛЕКСАНДР ВОЛКАНОВСКИ ЧЕМПИОН)
+    // =========================================================================
+    {
+        id: "alexander_volkanovski",
+        name: "Alexander Volkanovski",
+        nickname: "The Great",
+        division: "Featherweight",
+        rank: "C",
+        record: "26-4-0",
+        sherdog: { ko: 13, sub: 3, dec: 10, lossesKo: 3, lossesSub: 0, lossesDec: 1 },
+        ufcStats: { slpm: 6.19, strAcc: 57, sapm: 3.44, strDef: 59, tdAvg: 1.84, tdAcc: 37, tdDef: 70 },
+        nationality: "Australia", flag: "🇦🇺",
+        height: "168 cm", reach: "182 cm", stance: "Orthodox", age: 37,
+        stats: { striking: 96, wrestling: 89, grappling: 87, cardio: 98, power: 85, defense: 92 },
+        bio: "Действующий чемпион UFC в полулегком весе. Легенда дивизиона с идеальным бойцовским IQ и разносторонней техникой.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-07/VOLKANOVSKI_ALEXANDER_L_BELT_07-08.png",
+        fightHistory: [
+            { result: "Поражение", record: "26-4", opponent: "Илия Топурия", oppFlag: "🇪🇸", method: "KO (удар)", event: "UFC 298", date: "17 фев 2024", round: 2, time: "3:32", location: "Анахайм, США", note: "Завоевал реванш" },
+            { result: "Поражение", record: "26-3", opponent: "Ислам Махачев II", oppFlag: "🇷🇺", method: "KO (удар ногой в голову)", event: "UFC 294", date: "21 окт 2023", round: 1, time: "3:06", location: "Абу-Даби, ОАЭ", note: "Бой за титул в легком весе" },
+            { result: "Победа", record: "26-2", opponent: "Яир Родригес", oppFlag: "🇲🇽", method: "TKO (удары)", event: "UFC 290", date: "8 июл 2023", round: 3, time: "4:19", location: "Лас-Вегас, США", note: "Защитил титул в полулегком весе" }
+        ]
+    },
+
+    // =========================================================================
+    // BANTAMWEIGHT (ЛЕГЧАЙШИЙ ВЕС - ПЕТР ЯН ЧЕМПИОН)
+    // =========================================================================
+    {
+        id: "petr_yan",
+        name: "Petr Yan",
+        nickname: "No Mercy",
+        division: "Bantamweight",
+        rank: "C",
+        record: "17-5-0",
+        sherdog: { ko: 7, sub: 1, dec: 9, lossesKo: 0, lossesSub: 0, lossesDec: 5 },
+        ufcStats: { slpm: 5.03, strAcc: 53, sapm: 4.00, strDef: 61, tdAvg: 1.71, tdAcc: 52, tdDef: 85 },
         nationality: "Russia", flag: "🇷🇺",
-        height: "5'10" (178 cm)", reach: "70.0" (178 cm)", stance: "Orthodox", age: 37,
-        stats: { striking: 78, wrestling: 100, grappling: 99, cardio: 98, power: 78, defense: 94 },
-        bio: "UFC Hall of Famer & undefeated Lightweight Champion (29-0). Unmatched wrestling dominance.",
-        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2021-05/NURMAGOMEDOV_KHABIB_L.png",
+        height: "170 cm", reach: "170 cm", stance: "Switch", age: 33,
+        stats: { striking: 97, wrestling: 86, grappling: 84, cardio: 96, power: 88, defense: 94 },
+        bio: "Действующий чемпион UFC в легчайшем весе. Виртуоз переключения стоек и разбора защиты соперников.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-03/YAN_PETR_L_03-09.png",
         fightHistory: [
-            { result: "Победа", record: "29-0", opponent: "Джастин Гэтжи", oppFlag: "🇺🇸", method: "Сдача (треугольник)", event: "UFC 254", date: "24 окт 2020", round: 2, time: "1:34", location: "Абу-Даби, ОАЭ", note: "Защитил титул; Выступление вечера; Завершил карьеру непобежденным" },
-            { result: "Победа", record: "28-0", opponent: "Дастин Пуарье", oppFlag: "🇺🇸", method: "Сдача (удушение сзади)", event: "UFC 242", date: "7 сен 2019", round: 3, time: "2:06", location: "Абу-Даби, ОАЭ", note: "Защитил титул; Выступление вечера" },
-            { result: "Победа", record: "27-0", opponent: "Конор Макгрегор", oppFlag: "🇮🇪", method: "Сдача (залом шеи)", event: "UFC 229", date: "6 окт 2018", round: 4, time: "3:03", location: "Лас-Вегас, США", note: "Защитил титул" },
-            { result: "Победа", record: "26-0", opponent: "Эл Яквинта", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 223", date: "7 апр 2018", round: 5, time: "5:00", location: "Бруклин, США", note: "Завоевал вакантный титул" },
-            { result: "Победа", record: "25-0", opponent: "Эдсон Барбоза", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC 219", date: "30 дек 2017", round: 3, time: "5:00", location: "Лас-Вегас, США", note: "Выступление вечера" },
-            { result: "Победа", record: "24-0", opponent: "Майкл Джонсон", oppFlag: "🇺🇸", method: "Сдача (кимура)", event: "UFC 205", date: "12 ноя 2016", round: 3, time: "2:31", location: "Нью-Йорк, США", note: "" },
-            { result: "Победа", record: "23-0", opponent: "Даррелл Хорчер", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC on Fox 19", date: "16 апр 2016", round: 2, time: "3:38", location: "Тампа, США", note: "" },
-            { result: "Победа", record: "22-0", opponent: "Рафаэл дус Анжус", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC on Fox 11", date: "19 апр 2014", round: 3, time: "5:00", location: "Орландо, США", note: "" },
-            { result: "Победа", record: "21-0", opponent: "Пэт Хили", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 165", date: "21 сен 2013", round: 3, time: "5:00", location: "Торонто, Канада", note: "" },
-            { result: "Победа", record: "20-0", opponent: "Абель Трухильо", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC 160", date: "25 май 2013", round: 3, time: "5:00", location: "Лас-Вегас, США", note: "Рекорд UFC: 21 тейкдаун за бой" },
-            { result: "Победа", record: "19-0", opponent: "Тиагу Таварес", oppFlag: "🇧🇷", method: "KO (удары)", event: "UFC on FX 7", date: "19 янв 2013", round: 1, time: "1:55", location: "Сан-Паулу, Бразилия", note: "" },
-            { result: "Победа", record: "18-0", opponent: "Глейсон Тибау", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC 148", date: "7 июл 2012", round: 3, time: "5:00", location: "Лас-Вегас, США", note: "" },
-            { result: "Победа", record: "17-0", opponent: "Камал Шалорус", oppFlag: "🇮🇷", method: "Сдача (удушение сзади)", event: "UFC on FX 1", date: "20 янв 2012", round: 3, time: "2:08", location: "Нэшвилл, США", note: "Дебют в UFC" },
-            { result: "Победа", record: "16-0", opponent: "Аримарсель Сантус", oppFlag: "🇧🇷", method: "TKO (удары)", event: "ProFC 36", date: "22 окт 2011", round: 1, time: "3:33", location: "Хасавюрт, Россия", note: "" },
-            { result: "Победа", record: "15-0", opponent: "Вадим Хазов", oppFlag: "🇷🇺", method: "TKO (удары)", event: "ProFC 33", date: "2 июл 2011", round: 1, time: "5:00", location: "Таганрог, Россия", note: "" },
-            { result: "Победа", record: "14-0", opponent: "Хамиз Мамедов", oppFlag: "🇦🇿", method: "Сдача (треугольник)", event: "ProFC 30", date: "13 фев 2011", round: 1, time: "3:15", location: "Ростов-на-Дону, Россия", note: "" },
-            { result: "Победа", record: "13-0", opponent: "Ашот Шагинян", oppFlag: "🇦🇲", method: "TKO (удары)", event: "ProFC 29", date: "12 фев 2011", round: 1, time: "2:18", location: "Ростов-на-Дону, Россия", note: "" },
-            { result: "Победа", record: "12-0", opponent: "Саид Халилов", oppFlag: "🇷🇺", method: "Сдача (кимура)", event: "ProFC 28", date: "22 янв 2011", round: 1, time: "4:16", location: "Ростов-на-Дону, Россия", note: "" },
-            { result: "Победа", record: "11-0", opponent: "Али Багов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Golden Fist Russia", date: "10 июн 2010", round: 2, time: "5:00", location: "Москва, Россия", note: "" },
-            { result: "Победа", record: "10-0", opponent: "Виталий Островский", oppFlag: "🇧🇾", method: "TKO (удары)", event: "M-1 Selection 2010", date: "28 май 2010", round: 1, time: "4:06", location: "Киев, Украина", note: "" },
-            { result: "Победа", record: "9-0", opponent: "Олег Багов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Tsumada FC 4", date: "1 авг 2010", round: 2, time: "5:00", location: "Цумада, Россия", note: "" },
-            { result: "Победа", record: "8-0", opponent: "Шахбулат Шамхалаев", oppFlag: "🇷🇺", method: "Сдача (рычаг локтя)", event: "M-1 Challenge 2009", date: "8 авг 2009", round: 1, time: "4:36", location: "Санкт-Петербург, Россия", note: "" },
-            { result: "Победа", record: "7-0", opponent: "Эльдар Эльдаров", oppFlag: "🇷🇺", method: "TKO (удары)", event: "Tsumada FC 3", date: "8 авг 2009", round: 2, time: "2:44", location: "Цумада, Россия", note: "" },
-            { result: "Победа", record: "6-0", opponent: "Саид Ахмед", oppFlag: "🇷🇺", method: "TKO (удары)", event: "Tsumada FC 3", date: "8 авг 2009", round: 1, time: "2:05", location: "Цумада, Россия", note: "" },
-            { result: "Победа", record: "5-0", opponent: "Шамиль Абдулкеримов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Pankration Atrium Cup 1", date: "11 окт 2008", round: 2, time: "5:00", location: "Москва, Россия", note: "Финал кубка" },
-            { result: "Победа", record: "4-0", opponent: "Рамазан Курбанисмаилов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Pankration Atrium Cup 1", date: "11 окт 2008", round: 2, time: "5:00", location: "Москва, Россия", note: "" },
-            { result: "Победа", record: "3-0", opponent: "Магомед Магомедов", oppFlag: "🇷🇺", method: "Единогласное решение", event: "Pankration Atrium Cup 1", date: "11 окт 2008", round: 2, time: "5:00", location: "Москва, Россия", note: "" },
-            { result: "Победа", record: "2-0", opponent: "Шамиль Завуров", oppFlag: "🇷🇺", method: "Единогласное решение", event: "CSFU: Champions League", date: "11 окт 2008", round: 2, time: "5:00", location: "Полтава, Украина", note: "" },
-            { result: "Победа", record: "1-0", opponent: "Вусал Байрамов", oppFlag: "🇦🇿", method: "Сдача (удушение сзади)", event: "CSFU: Champions League", date: "13 сен 2008", round: 1, time: "2:20", location: "Полтава, Украина", note: "Дебют в ММА" }
+            { result: "Победа", record: "17-5", opponent: "Дейвисон Фигейреду", oppFlag: "🇧🇷", method: "Единогласное решение", event: "UFC Fight Night 248", date: "23 ноя 2024", round: 5, time: "5:00", location: "Макао, Китай", note: "Завоевал титул чемпиона UFC в легчайшем весе" },
+            { result: "Победа", record: "16-5", opponent: "Сон Ядон", oppFlag: "🇨🇳", method: "Единогласное решение", event: "UFC 299", date: "9 мар 2024", round: 3, time: "5:00", location: "Майами, США", note: "" },
+            { result: "Поражение", record: "15-5", opponent: "Мераб Двалишвили", oppFlag: "🇬🇪", method: "Единогласное решение", event: "UFC Fight Night 221", date: "11 мар 2023", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "" },
+            { result: "Поражение", record: "15-4", opponent: "Шон О'Мэлли", oppFlag: "🇺🇸", method: "Раздельное решение", event: "UFC 280", date: "22 окт 2022", round: 3, time: "5:00", location: "Абу-Даби, ОАЭ", note: "Бой вечера" }
         ]
     },
+
+    // =========================================================================
+    // FLYWEIGHT (НАИЛЕГЧАЙШИЙ ВЕС - ДЖОШУА ВАН ЧЕМПИОН)
+    // =========================================================================
     {
-        id: "conor_mcgregor",
-        name: "Conor McGregor",
-        nickname: "The Notorious",
-        division: "Lightweight",
-        rank: 5,
-        record: "22-6-0",
-        sherdog: { ko: 19, sub: 1, dec: 2, lossesKo: 3, lossesSub: 2, lossesDec: 1 },
-        ufcStats: { slpm: 5.24, strAcc: 49, sapm: 4.06, strDef: 53, tdAvg: 0.61, tdAcc: 57, tdDef: 76 },
-        nationality: "Ireland", flag: "🇮🇪",
-        height: "5'9" (175 cm)", reach: "74.0" (188 cm)", stance: "Southpaw", age: 37,
-        stats: { striking: 94, wrestling: 65, grappling: 68, cardio: 75, power: 90, defense: 80 },
-        bio: "First simultaneous two-division champion in UFC history. Biggest PPV draw in MMA history.",
-        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2021-06/MCGREGOR_CONOR_L.png",
+        id: "joshua_van",
+        name: "Joshua Van",
+        nickname: "Fearless",
+        division: "Flyweight",
+        rank: "C",
+        record: "11-2-0",
+        sherdog: { ko: 6, sub: 2, dec: 3, lossesKo: 1, lossesSub: 1, lossesDec: 0 },
+        ufcStats: { slpm: 8.12, strAcc: 54, sapm: 5.20, strDef: 58, tdAvg: 1.10, tdAcc: 40, tdDef: 80 },
+        nationality: "Myanmar / USA", flag: "🇲🇲",
+        height: "165 cm", reach: "165 cm", stance: "Orthodox", age: 24,
+        stats: { striking: 94, wrestling: 85, grappling: 82, cardio: 96, power: 88, defense: 86 },
+        bio: "Действующий чемпион UFC в наилегчайшем весе. Молодой феномен с феноменальной скоростью ударов.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2023-11/VAN_JOSHUA_L.png",
         fightHistory: [
-            { result: "Поражение", record: "22-6", opponent: "Дастин Пуарье III", oppFlag: "🇺🇸", method: "TKO (перелом ноги)", event: "UFC 264", date: "10 июл 2021", round: 1, time: "5:00", location: "Лас-Вегас, США", note: "" },
-            { result: "Поражение", record: "22-5", opponent: "Дастин Пуарье II", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 257", date: "24 янв 2021", round: 2, time: "2:32", location: "Абу-Даби, ОАЭ", note: "" },
-            { result: "Победа", record: "22-4", opponent: "Дональд Серроне", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 246", date: "18 янв 2020", round: 1, time: "0:40", location: "Лас-Вегас, США", note: "Выступление вечера" },
-            { result: "Поражение", record: "21-4", opponent: "Хабиб Нурмагомедов", oppFlag: "🇷🇺", method: "Сдача (залом шеи)", event: "UFC 229", date: "6 окт 2018", round: 4, time: "3:03", location: "Лас-Вегас, США", note: "Бой за титул UFC в легком весе" },
-            { result: "Победа", record: "21-3", opponent: "Эдди Альварес", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 205", date: "12 ноя 2016", round: 2, time: "3:04", location: "Нью-Йорк, США", note: "Завоевал титул UFC в легком весе; Стал первым двойным чемпионом" },
-            { result: "Победа", record: "20-3", opponent: "Нейт Диас II", oppFlag: "🇺🇸", method: "Решение большинства", event: "UFC 202", date: "20 авг 2016", round: 5, time: "5:00", location: "Лас-Вегас, США", note: "Бой вечера" },
-            { result: "Поражение", record: "19-3", opponent: "Нейт Диас", oppFlag: "🇺🇸", method: "Сдача (удушение сзади)", event: "UFC 196", date: "5 мар 2016", round: 2, time: "4:12", location: "Лас-Вегас, США", note: "Бой вечера" },
-            { result: "Победа", record: "19-2", opponent: "Жозе Алду", oppFlag: "🇧🇷", method: "KO (удар)", event: "UFC 194", date: "12 дек 2015", round: 1, time: "0:13", location: "Лас-Вегас, США", note: "Завоевал бесспорный титул в полулегком весе (рекорд UFC 13 сек)" },
-            { result: "Победа", record: "18-2", opponent: "Чед Мендес", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 189", date: "11 июл 2015", round: 2, time: "4:57", location: "Лас-Вегас, США", note: "Завоевал временный титул в полулегком весе; Выступление вечера" },
-            { result: "Победа", record: "17-2", opponent: "Деннис Зифер", oppFlag: "🇩🇪", method: "TKO (удары)", event: "UFC Fight Night 59", date: "18 янв 2015", round: 2, time: "1:54", location: "Бостон, США", note: "Выступление вечера" },
-            { result: "Победа", record: "16-2", opponent: "Дастин Пуарье", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC 178", date: "27 сен 2014", round: 1, time: "1:46", location: "Лас-Вегас, США", note: "Выступление вечера" },
-            { result: "Победа", record: "15-2", opponent: "Диего Брандао", oppFlag: "🇧🇷", method: "TKO (удары)", event: "UFC Fight Night 46", date: "19 июл 2014", round: 1, time: "4:05", location: "Дублин, Ирландия", note: "Выступление вечера" },
-            { result: "Победа", record: "14-2", opponent: "Макс Холлоуэй", oppFlag: "🇺🇸", method: "Единогласное решение", event: "UFC Fight Night 26", date: "17 авг 2013", round: 3, time: "5:00", location: "Бостон, США", note: "" },
-            { result: "Победа", record: "13-2", opponent: "Маркус Бримейдж", oppFlag: "🇺🇸", method: "TKO (удары)", event: "UFC on Fuel TV 9", date: "6 апр 2013", round: 1, time: "1:07", location: "Стокгольм, Швеция", note: "Дебют в UFC; Нокаут вечера" },
-            { result: "Победа", record: "12-2", opponent: "Иван Бухингер", oppFlag: "🇸🇰", method: "KO (удар)", event: "Cage Warriors 51", date: "31 дек 2012", round: 1, time: "3:40", location: "Дублин, Ирландия", note: "Завоевал титул Cage Warriors в легком весе" },
-            { result: "Победа", record: "11-2", opponent: "Дэйв Хилл", oppFlag: "🇬🇧", method: "Сдача (удушение сзади)", event: "Cage Warriors 47", date: "2 июн 2012", round: 2, time: "4:10", location: "Дублин, Ирландия", note: "Завоевал титул Cage Warriors в полулегком весе" },
-            { result: "Победа", record: "10-2", opponent: "Стив О'Киф", oppFlag: "🇬🇧", method: "KO (удары локтями)", event: "Cage Warriors 45", date: "18 фев 2012", round: 1, time: "1:33", location: "Кентиш-Таун, Англия", note: "" },
-            { result: "Победа", record: "9-2", opponent: "Аарон Джансен", oppFlag: "🇳🇱", method: "TKO (удары)", event: "Cage Warriors Fight Night 2", date: "8 сен 2011", round: 1, time: "3:29", location: "Амман, Иордания", note: "" },
-            { result: "Победа", record: "8-2", opponent: "Артур Совински", oppFlag: "🇵🇱", method: "TKO (удары)", event: "Celtic Gladiator 2", date: "11 июн 2011", round: 2, time: "1:12", location: "Портлиашь, Ирландия", note: "" },
-            { result: "Победа", record: "7-2", opponent: "Патрик Доэрти", oppFlag: "🇮🇪", method: "KO (удар)", event: "Immortal FC 4", date: "16 апр 2011", round: 1, time: "0:04", location: "Донэгал, Ирландия", note: "" },
-            { result: "Победа", record: "6-2", opponent: "Хью Грэйди", oppFlag: "🇬🇧", method: "KO (удар)", event: "Chaos FC 8", date: "12 фев 2011", round: 1, time: "0:47", location: "Дерри, Северная Ирландия", note: "" },
-            { result: "Поражение", record: "5-2", opponent: "Джозеф Даффи", oppFlag: "🇮🇪", method: "Сдача (ручной треугольник)", event: "Cage Warriors 39", date: "27 ноя 2010", round: 1, time: "0:38", location: "Корке, Ирландия", note: "" },
-            { result: "Победа", record: "5-1", opponent: "Коннор Диллон", oppFlag: "🇮🇪", method: "TKO (удары)", event: "Chaos FC 7", date: "9 окт 2010", round: 1, time: "4:22", location: "Дерри, Северная Ирландия", note: "" },
-            { result: "Победа", record: "4-1", opponent: "Стивен Бэйли", oppFlag: "🇮🇪", method: "TKO (удары)", event: "KOP: Anarchy", date: "12 дек 2008", round: 1, time: "1:22", location: "Дублин, Ирландия", note: "" },
-            { result: "Поражение", record: "3-1", opponent: "Артемий Ситенков", oppFlag: "🇱🇹", method: "Сдача (рычаг колена)", event: "Cage of Truth 3", date: "28 июн 2008", round: 1, time: "1:09", location: "Дублин, Ирландия", note: "" },
-            { result: "Победа", record: "3-0", opponent: "Гари Моррис", oppFlag: "🇮🇪", method: "TKO (удары)", event: "Cage of Truth 2", date: "8 мар 2008", round: 2, time: "0:08", location: "Дублин, Ирландия", note: "" },
-            { result: "Победа", record: "2-0", opponent: "Кристиан Слейтер", oppFlag: "🇮🇪", method: "TKO (удары)", event: "Cage of Truth 1", date: "8 мар 2008", round: 1, time: "0:30", location: "Дублин, Ирландия", note: "" },
-            { result: "Победа", record: "1-0", opponent: "Гари Моррис", oppFlag: "🇮🇪", method: "TKO (удары)", event: "Ring of Truth 6", date: "17 фев 2007", round: 1, time: "2:00", location: "Дублин, Ирландия", note: "Дебют в профессиональном ММА" }
+            { result: "Победа", record: "11-2", opponent: "Эдгар Чайрез", oppFlag: "🇲🇽", method: "Единогласное решение", event: "UFC 306", date: "14 сен 2024", round: 3, time: "5:00", location: "Лас-Вегас, США", note: "Завоевал титул чемпиона UFC" },
+            { result: "Поражение", record: "10-2", opponent: "Шарлес Джонсон", oppFlag: "🇺🇸", method: "KO (удар)", event: "UFC on ESPN 59", date: "13 июл 2024", round: 3, time: "0:20", location: "Денвер, США", note: "" },
+            { result: "Победа", record: "10-1", opponent: "Фелипе Бунес", oppFlag: "🇧🇷", method: "TKO (удары)", event: "UFC Fight Night 234", date: "13 янв 2024", round: 2, time: "4:31", location: "Лас-Вегас, США", note: "" },
+            { result: "Победа", record: "9-1", opponent: "Кевин Борхас", oppFlag: "🇵🇪", method: "Единогласное решение", event: "UFC 295", date: "11 ноя 2023", round: 3, time: "5:00", location: "Нью-Йорк, США", note: "" },
+            { result: "Победа", record: "8-1", opponent: "Жалгас Жумагулов", oppFlag: "🇰🇿", method: "Раздельное решение", event: "UFC on ABC 5", date: "24 июн 2023", round: 3, time: "5:00", location: "Джексонвилл, США", note: "Дебют в UFC" }
+        ]
+    },
+
+    // =========================================================================
+    // OTHER TOP CONTENDERS & LEGENDS
+    // =========================================================================
+    {
+        id: "nick_diaz",
+        name: "Nick Diaz",
+        nickname: "Diablo",
+        division: "Welterweight",
+        rank: 15,
+        record: "26-10-0 (2 NC)",
+        sherdog: { ko: 13, sub: 8, dec: 5, lossesKo: 3, lossesSub: 0, lossesDec: 7 },
+        ufcStats: { slpm: 5.43, strAcc: 45, sapm: 3.76, strDef: 62, tdAvg: 0.81, tdAcc: 33, tdDef: 61 },
+        nationality: "USA", flag: "🇺🇸",
+        height: "185 cm", reach: "193 cm", stance: "Southpaw", age: 42,
+        stats: { striking: 93, wrestling: 68, grappling: 90, cardio: 99, power: 82, defense: 80 },
+        bio: "Легенда ММА из Стоктона. Бывший чемпион Strikeforce в полусреднем весе, претендент на титул UFC.",
+        image: "https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2021-09/DIAZ_NICK_L_09-25.png",
+        fightHistory: [
+            { result: "Поражение", record: "26-10 (2 NC)", opponent: "Робби Лоулер II", oppFlag: "🇺🇸", method: "TKO (отказ от продолжения)", event: "UFC 266", date: "25 сен 2021", round: 3, time: "0:44", location: "Лас-Вегас, США", note: "" }
         ]
     }
 ];
