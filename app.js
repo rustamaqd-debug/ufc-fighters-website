@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let rankBadgeHtml = '';
         if (fighter.rank === 'C') {
-            rankBadgeHtml = `<div class="card-rank-badge rank-c"><i class="fa-solid fa-crown"></i> CHIP</div>`;
+            rankBadgeHtml = `<div class="card-rank-badge rank-c"><i class="fa-solid fa-crown"></i> ЧЕМПИОН</div>`;
         } else if (typeof fighter.rank === 'number' && fighter.rank <= 5) {
             rankBadgeHtml = `<div class="card-rank-badge rank-top5">#${fighter.rank}</div>`;
         } else if (typeof fighter.rank === 'number') {
@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const athleteImg = fighter.image || 'assets/fighter_card_bg.png';
+        const shortBioText = fighter.bio ? (fighter.bio.length > 90 ? fighter.bio.substring(0, 90) + '...' : fighter.bio) : 'Боец рейтинга UFC';
 
         card.innerHTML = `
             <div class="card-img-container" style="background-image: linear-gradient(rgba(20, 20, 25, 0.1), rgba(20, 20, 25, 0.9)), url('${athleteImg}');">
@@ -198,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-nickname">${fighter.nickname !== '—' ? `"${fighter.nickname}"` : '&nbsp;'}</div>
                     <div class="card-name">${fighter.name}</div>
                     <div class="card-division-badge">${translateDivision(fighter.division)}</div>
+                    <p class="card-bio-short"><i class="fa-solid fa-circle-info" style="color: var(--accent-red); margin-right: 4px;"></i> ${shortBioText}</p>
                 </div>
                 <div class="card-footer">
                     <div class="card-record">${fighter.record}</div>
@@ -280,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('modal-name').innerText = fighter.name;
         document.getElementById('modal-nickname').innerText = fighter.nickname !== '—' ? `"${fighter.nickname}"` : '';
-        document.getElementById('modal-verdict-elo').innerText = `${fighter.verdictRating || 900} Elo`;
         document.getElementById('modal-country').innerText = `${fighter.nationality} ${fighter.flag}`;
         document.getElementById('modal-record').innerText = fighter.record;
         document.getElementById('modal-height').innerText = fighter.height;
@@ -288,6 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modal-stance').innerText = translateStance(fighter.stance);
         document.getElementById('modal-age').innerText = `${fighter.age} лет`;
         document.getElementById('modal-bio').innerText = fighter.bio;
+
+        // Parse professional record W-L-D from the record string e.g. "26-1-0"
+        const recParts = fighter.record.replace(/[^\d-]/g, '').split('-');
+        document.getElementById('modal-rec-w').innerText = recParts[0] || '0';
+        document.getElementById('modal-rec-l').innerText = recParts[1] || '0';
+        document.getElementById('modal-rec-d').innerText = recParts[2] || '0';
 
         // Sherdog Breakdown
         if (fighter.sherdog) {
@@ -315,9 +322,125 @@ document.addEventListener('DOMContentLoaded', () => {
 
         detailModal.classList.add('open');
 
+        // Render fight history table
+        renderFightHistory(fighter);
+
         setTimeout(() => {
             drawRadarChart(fighter.stats);
         }, 100);
+    }
+
+    function renderFightHistory(fighter) {
+        const summaryBox = document.getElementById('fh-summary-box');
+        const tbody = document.getElementById('fight-history-tbody');
+
+        if (!summaryBox || !tbody) return;
+
+        const history = fighter.fightHistory;
+
+        // If no history data available
+        if (!history || history.length === 0) {
+            summaryBox.innerHTML = '';
+            tbody.innerHTML = `<tr><td colspan="9" class="fh-empty">Данные о боях для этого бойца пока не добавлены.</td></tr>`;
+            return;
+        }
+
+        // Calculate running records (1-0, 2-0, 2-1...) from career start to recent fight
+        let runningW = 0, runningL = 0, runningD = 0;
+        const runningRecords = new Array(history.length);
+        
+        for (let i = history.length - 1; i >= 0; i--) {
+            const res = history[i].result.toLowerCase();
+            if (res.includes('победа')) {
+                runningW++;
+            } else if (res.includes('поражение')) {
+                runningL++;
+            } else {
+                runningD++;
+            }
+            runningRecords[i] = runningD > 0 ? `${runningW}-${runningL}-${runningD}` : `${runningW}-${runningL}`;
+        }
+
+        // Build summary counts from history
+        let totalFights = history.length;
+        let wins = 0, losses = 0, draws = 0;
+        let winsKo = 0, winsSub = 0, winsDec = 0;
+        let lossesKo = 0, lossesSub = 0, lossesDec = 0;
+
+        history.forEach(fight => {
+            const res = fight.result.toLowerCase();
+            const method = fight.method.toLowerCase();
+
+            if (res.includes('победа')) {
+                wins++;
+                if (method.includes('ko') || method.includes('tko') || method.includes('нокаут') || method.includes('удар')) winsKo++;
+                else if (method.includes('сдача') || method.includes('sub') || method.includes('удушение') || method.includes('болевой') || method.includes('кимура') || method.includes('треугольник')) winsSub++;
+                else winsDec++;
+            } else if (res.includes('поражение')) {
+                losses++;
+                if (method.includes('ko') || method.includes('tko') || method.includes('нокаут')) lossesKo++;
+                else if (method.includes('сдача') || method.includes('удушение')) lossesSub++;
+                else lossesDec++;
+            } else {
+                draws++;
+            }
+        });
+
+        // Render summary box
+        summaryBox.innerHTML = `
+            <div class="fh-summary-item total">
+                <div class="fh-summary-val">${totalFights}</div>
+                <div class="fh-summary-lbl">Боёв</div>
+            </div>
+            <div class="fh-summary-item wins">
+                <div class="fh-summary-val">${wins}</div>
+                <div class="fh-summary-lbl">Победы</div>
+            </div>
+            <div class="fh-summary-item wins-ko">
+                <div class="fh-summary-val">${winsKo}</div>
+                <div class="fh-summary-lbl">KO/TKO</div>
+            </div>
+            <div class="fh-summary-item wins-sub">
+                <div class="fh-summary-val">${winsSub}</div>
+                <div class="fh-summary-lbl">Сдача</div>
+            </div>
+            <div class="fh-summary-item wins-dec">
+                <div class="fh-summary-val">${winsDec}</div>
+                <div class="fh-summary-lbl">Реш.</div>
+            </div>
+            <div class="fh-summary-item losses">
+                <div class="fh-summary-val">${losses}</div>
+                <div class="fh-summary-lbl">Поражения</div>
+            </div>
+        `;
+
+        // Render table rows with step-by-step running records (e.g. 1-0, 2-0, 2-1)
+        tbody.innerHTML = '';
+        history.forEach((fight, idx) => {
+            const res = fight.result.toLowerCase();
+            let rowClass = 'row-draw';
+            let badgeClass = 'draw';
+            if (res.includes('победа')) { rowClass = 'row-win'; badgeClass = 'win'; }
+            else if (res.includes('поражение')) { rowClass = 'row-loss'; badgeClass = 'loss'; }
+
+            // Display running record e.g. "1-0", "2-0", "2-1"
+            const rowRecord = runningRecords[idx] || fight.record;
+
+            const tr = document.createElement('tr');
+            tr.className = rowClass;
+            tr.innerHTML = `
+                <td><span class="fh-result-badge ${badgeClass}">${fight.result}</span></td>
+                <td class="fh-record"><strong>${rowRecord}</strong></td>
+                <td class="fh-opponent"><span class="fh-opponent-flag">${fight.oppFlag || ''}</span>${fight.opponent}</td>
+                <td class="fh-method">${fight.method}</td>
+                <td class="fh-event">${fight.event}</td>
+                <td class="fh-date">${fight.date}</td>
+                <td class="fh-round">${fight.round}</td>
+                <td class="fh-time">${fight.time}</td>
+                <td class="fh-note">${fight.note || '—'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
     }
 
     function translateStance(stance) {
@@ -538,7 +661,6 @@ document.addEventListener('DOMContentLoaded', () => {
         comparisonPanel.classList.remove('hidden');
 
         const metrics = [
-            { label: 'Verdict Elo Rating', val1: f1.verdictRating || 900, val2: f2.verdictRating || 900 },
             { label: 'Ударов в мин (SLpM)', val1: f1.ufcStats?.slpm || 4.0, val2: f2.ufcStats?.slpm || 4.0 },
             { label: 'Точность ударов %', val1: f1.ufcStats?.strAcc || 50, val2: f2.ufcStats?.strAcc || 50 },
             { label: 'Защита от тейкдаунов %', val1: f1.ufcStats?.tdDef || 70, val2: f2.ufcStats?.tdDef || 70 },
