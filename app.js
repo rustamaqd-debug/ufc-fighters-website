@@ -321,6 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         detailModal.classList.add('open');
+        const modalCard = detailModal.querySelector('.modal-card');
+        if (modalCard) modalCard.scrollTop = 0;
 
         // Render fight history table
         renderFightHistory(fighter);
